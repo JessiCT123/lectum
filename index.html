@@ -3,9 +3,221 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="libros, géneros, acción, romance, fantasia">
+    <meta name="author" content="Maria Garcia, Belen Romero, Jessica Castillo, Nayeli Barahona">
+    <link rel="stylesheet" type="text/css" media="screen, handheld" href="style.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <title>Lectum</title>
 </head>
 <body>
+    <header>
+        <div class="buscar">
+            <i class="fa-solid fa-magnifying-glass fa-2xl"alt="Buscar" title="Buscar"></i>
+        </div>   <!--ícono de buscar-->
+        
+        <div class="logo">
+            <a href="Stella.html"><img src="logo.png"alt="Stella"></a>
+        </div>   <!--Logo de stella-->
+
+        <div class="usuario-carrito">
+            <div class="iconos">
+                <a href="sesion.html" target="_self"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3_DCFxEwpnHdDMKs1wO55guS6Q5O65kYG6Q&s"alt="usuario"width="50x"; height="50px";></a>
+                <i class="fa-solid fa-bag-shopping fa-2xl"alt="comprar"></i>
+            </div>
+        </div>   <!--ícono de comprar-->
+    </header><!--poner con las 3 lineas-->
+        <nav >
+            <a href="Poesía.html" target="_self">Poesía</a>
+            <a href="Romance.html" target="_self">Romance</a>
+            <a href="Fantasía.html" target="_self">Fantasía</a>
+            <a href="Terror.html" target="_self">Terror</a>
+            <a href="Juvenil.html" target="_self">Juvenil</a>
+        </nav>
+
+  <section class="principal">
+    <div class="carousel">
+  <button class="prev">&#10094;</button>
+
+  <div class="carousel-images">
+    <img src="https://m.media-amazon.com/images/I/51ocrPbvNCL._AC_UF1000,1000_QL80_.jpg" class="active">
+    <img src="https://cdn.grupoelcorteingles.es/SGFM/dctm/MEDIA03/202410/02/00106524331961____6__1200x1200.jpg">
+    <img src="img/foto3.jpg">
+  </div>
+  
+
+  <button class="next">&#10095;</button>
+</div>
+    <script>
+let index = 0;
+const images = document.querySelectorAll(".carousel-images img");
+
+function showImage(i) {
+  images.forEach(img => img.classList.remove("active"));
+  images[i].classList.add("active");
+}
+
+document.querySelector(".next").onclick = () => {
+  index = (index + 1) % images.length;
+  showImage(index);
+};
+
+document.querySelector(".prev").onclick = () => {
+  index = (index - 1 + images.length) % images.length;
+  showImage(index);
+};
+setInterval(() => {
+  index = (index + 1) % images.length;
+  showImage(index);
+}, 5000);
+</script>
+<style>.carousel {
+  width: 500px;
+  position: relative;
+  margin: auto;
+  overflow: hidden;
+}
+
+.carousel-images img {
+  width: 100%;
+  display: none;
+}
+
+.carousel-images img.active {
+  display: block;
+}
+
+button.prev,
+button.next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.5);
+  color: white;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 8px;
+}
+
+.prev { left: 10px; }
+.next { right: 10px; }</style>
+  </section>
+  <section class="catalogos">
+    <div>
+        <figure>
+            <a href="libro1.html" target="_self">
+                <img src="https://m.media-amazon.com/images/I/51ocrPbvNCL._AC_UF1000,1000_QL80_.jpg" alt="Collares" width="250" height="250">
+                <figcaption >
+                    Harry Potter y la piedra filosofal →
+                </figcaption>
+            </a>
+        </figure>
+    </div>
+    <div>
+        <figure>
+            <a href="libro2.html" target="_self">
+                <img src="https://cdn.grupoelcorteingles.es/SGFM/dctm/MEDIA03/202410/02/00106524331961____6__1200x1200.jpg" alt="Collares" width="250" height="250">
+                <figcaption >
+                    Orgullo y prejuicio →
+                </figcaption>
+            </a>
+        </figure>
+    </div>
+    <div>
+        <figure>
+            <a href="libro3.html" target="_self">
+                <img src="https://dcdn-us.mitiendanube.com/stores/002/284/028/products/bajo-la-misma-estrella-libro-jhon-green-fw1-9f2d47f4a0ced8a73c16651016519656-1024-1024.webp" alt="Collares" width="250" height="250">
+                <figcaption >
+                    Bajo la misma estrella →
+                </figcaption>
+            </a>
+        </figure>
+    </div>
+    <div>
+        <figure> 
+            <a href="libro4.html" target="_self">
+                <img src="https://m.media-amazon.com/images/I/713wmc+M8hL._AC_UY300_.jpg" alt="Collares" width="250" height="250">
+                <figcaption>
+                    Las flores del mal →
+                </figcaption> 
+            </a>
+        </figure>
+    </div>
+    <div>
+        <figure> 
+            <a href="libro5.html" target="_self">
+                <img src="https://m.media-amazon.com/images/I/713wmc+M8hL._AC_UY300_.jpg" alt="Collares" width="250" height="250">
+                <figcaption>
+                    Las flores del mal →
+                </figcaption> 
+            </a>
+        </figure>
+    </div>
+  </section>
+  <hr>
+    <div id="sobreNosotros" class="SN">
+        <br>
+        <h3>Sobre Nosotros</h3>
+        <p>
+            Nuestra Historia
+            Stella nació de la pasión por la belleza y el detalle. Somos una joyería 
+            comprometida con ofrecer piezas que no solo adornan, sino que expresan 
+            personalidad y estilo.
+
+            ¿Qué nos hace especiales?<br>
+            ✨ Diseños únicos y atemporales.<br>
+            ✨ Joyería de calidad a precios accesibles.<br>
+            ✨ Piezas perfectas para regalar o consentirte.<br>
+            ✨ Colecciones que siguen las últimas tendencias.<br>
+        </p>
+        <br>
+
+        <h3>Nuestra Misión</h3>
+        <p>
+            Hacer que cada mujer se sienta especial con joyas que realcen su belleza 
+            natural y complementen su personalidad única. 
+            <pre>
+                <b>
+                    Bienvenida a Stella - Donde cada joya brilla tanto como tú.
+                </b>
+            </pre>
+        </p>
+        <iframe src="video.mp4"></iframe>
+    </div>
+  <hr>
+    <section class="pie">
+        <div class="logoPie">
+            <a href="Stella.html"><img src="logo.png"alt="Stella"></a>
+        </div>   <!--Logo de stella-->
+        <div class="redes">
+            <a href="https://www.tiktok.com/">Tik Tok</a><br>
+            <a href="https://x.com/">X</a>
+        </div>
+    </section><br><br>
+
+    <a href="#miFormulario" class="f">FORMULARIO</a>
+    <div id="miFormulario"class="formulario">
+        <form action="Stella.html" method="get">
+            Comentario-Recomendaciones:<br>
+            <input type="text" name="comentario"/><br><br>
+            Adjuntar Ficheros(no necesario):<br>
+            <input type="file" name="fichero"/><br><br>
+            <button>Enviar</button>
+        </form>
+    </div><br><br>
+
+    <a href="#mapa" class="map">DONDE NOS ENCUENTRAS</a>
+    <div id="mapa" class="mapa">
+        <br>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2994.7658254462235!2d-1.431243024303704!3d37.844897571967785!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd648e8b8dedeaf5%3A0x560c4962218a3f9d!2sIES%20Miguel%20Hern%C3%A1ndez!5e1!3m2!1ses!2ses!4v1764876204633!5m2!1ses!2ses" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+    <br>
+    <a id="btn-fixed" href="https://web.whatsapp.com/">
+        <img src="https://cdn.pixabay.com/photo/2015/08/03/13/58/soon-873316_960_720.png" alt="Whatsapp" width="50" height="50"/></a>
     
+    <footer>
+        <p>Nayeli Barahona &copy; 2025</p>
+    </footer>
 </body>
 </html>
