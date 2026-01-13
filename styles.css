@@ -1,0 +1,170 @@
+/******************************** RESET BÁSICO *********************/
+
+* {
+    margin: 0; /* Elimina el margen por defecto de todos los elementos */
+    padding: 0; /* Elimina el padding por defecto de todos los elementos */
+    box-sizing: border-box; /* Hace que el padding y border se incluyan en el tamaño total del elemento */
+}
+
+body {
+    font-family: Georgia, 'Times New Roman', Times, serif; 
+    font-size: 16px; 
+    background-color: rgb(255, 243, 218);; 
+    color: #333; 
+}
+
+img {
+    max-width: 100%; /* Las imágenes no pueden ser más anchas que su contenedor */
+    height: auto; /* La altura se ajusta automáticamente manteniendo la proporción */
+}
+
+/******************************** HEADER *********************/
+
+header {
+    display: flex; /* Activa flexbox para organizar los elementos en fila */
+    justify-content: space-between; /* Distribuye los elementos con espacio entre ellos */
+    align-items: center; 
+    padding: 10px 60px; /* Espaciado interno: 10px arriba/abajo, 60px izquierda/derecha */
+    border-bottom: 1px solid #ddd; /* Línea gris clara en la parte inferior */
+}
+
+header {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                    url('https://wallpaperaccess.com/full/553349.jpg');
+  background-size: cover;
+  background-position: center;
+}
+.buscar {
+    display: flex; 
+    align-items: center; /* Centra verticalmente el icono de búsqueda */
+}
+
+.logo {
+    text-align: center; 
+    display: flex; 
+    align-items: center; /* Centra verticalmente */
+    justify-content: center; /* Centra horizontalmente */
+}
+
+.logo img {
+    width: 100px; 
+    transition: transform 0.3s; /* Animación suave de 0.3 segundos para transformaciones */
+}
+
+.logo img:hover {
+    transform: scale(1.15); /* Al pasar el ratón, agranda el logo un 15% */
+}
+
+.usuario-carrito {
+    display: flex; 
+    justify-content: flex-end; /* Alinea los elementos a la derecha */
+    align-items: center; 
+}
+
+.iconos {
+    display: flex; 
+    align-items: center; 
+    gap: 80px; /* Espacio de 80px entre cada icono */
+}
+
+.iconos a {
+    transition: transform 0.3s; /* Animación suave para los enlaces de iconos */
+}
+
+.iconos a:hover {
+    transform: translateY(-3px); /* Al pasar el ratón, mueve el icono 3px hacia arriba */
+}
+
+/************************* NAVEGACIÓN *********************************/
+
+nav {
+    font-size: 16px; 
+    display: flex; 
+    justify-content: center; 
+    gap: 40px; /* Espacio de 40px entre cada enlace */
+    padding: 15px 0; /* Espaciado arriba y abajo de 15px */
+    background: #ffffff;
+    background: linear-gradient(0deg,rgba(255, 255, 255, 1) 4%, rgba(216, 179, 105, 0.2) 50%, rgba(216, 179, 105, 0.3) 100%);
+}
+
+nav a {
+    text-decoration: none; /* Quita el subrayado de los enlaces */
+    color: #333; 
+    font-size: 18px; 
+    transition: color 0.3s; /* Animación suave para el cambio de color */
+    position: relative; /* Necesario para posicionar el ::after */
+    padding: 5px 10px; /* Espaciado interno del enlace */
+}
+
+nav a::after {
+    content: ''; /* Crea un elemento vacío */
+    position: absolute; /* Posición absoluta respecto al enlace */
+    bottom: 0; /* Lo coloca en la parte inferior */
+    left: 0; /* Lo alinea a la izquierda */
+    width: 0; /* Empieza con ancho 0 (invisible) */
+    height: 2px; /* Altura de la línea */
+    background-color: rgb(216, 179, 105); /* Color dorado de la línea */
+    transition: width 0.3s; /* Animación suave del crecimiento de la línea */
+}
+
+nav a:hover {
+    color: rgb(216, 179, 105); /* Al pasar el ratón, cambia el texto a color dorado */
+}
+
+nav a:hover::after {
+    width: 100%; /* Al pasar el ratón, la línea crece hasta el 100% del ancho */
+}
+
+/************************* IMAGEN PRINCIPAL *********************************/
+
+.principal {
+    overflow: hidden; /* Oculta cualquier parte de imagen que se salga del contenedor */
+}
+
+/************************* CATÁLOGOS *********************************/
+
+.catalogos {
+    display: grid; /* Activa CSS Grid para crear una cuadrícula */
+    text-align: center; 
+    justify-content: center; /* Centra la cuadrícula horizontalmente */
+    grid-template-columns: repeat(2, 1fr); /* Crea 2 columnas de igual tamaño */
+    padding: 30px; /* Espaciado interno de 30px */
+    gap: 20px; /* Espacio de 20px entre las tarjetas */
+}
+
+.catalogos figure {
+    overflow: hidden; /* Oculta el desbordamiento de las imágenes */
+    transition: transform 0.3s, box-shadow 0.3s; /* Animación para movimiento y sombra */
+}
+
+.catalogos figure:hover {
+    transform: translateY(-5px); /* Al pasar el ratón, sube la tarjeta 5px */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Añade una sombra al pasar el ratón */
+}
+
+.catalogos img {
+    transition: transform 0.3s; /* Animación suave para las imágenes */
+    width: 350px;
+    height: 500px;
+}
+
+.catalogos figure:hover img {
+    transform: scale(1.05); /* Al pasar el ratón, agranda la imagen */
+}
+
+.catalogos figcaption {
+    text-align: center; 
+    padding: 10px; /* Espaciado interno de 10px */
+}
+a:link {
+    color: black; /* Color negro para enlaces no visitados */
+    transition: color 0.3s; /* Animación suave del cambio de color */
+}
+
+a:visited {
+    color: black; /* Color negro para enlaces visitados */
+}
+
+a:hover {
+    color: rgb(216, 179, 105); /* Color dorado al pasar el ratón */
+}
