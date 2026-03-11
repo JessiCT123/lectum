@@ -134,8 +134,18 @@ const LectumCookies = (() => {
   function clearUser() {
     remove(USER_KEY);
   }
+  // Consentimiento de cookies  
+  function acceptCookies() {
+  LectumCookies.grantConsent();
+  document.getElementById("cookieBanner").style.display = "none";
+}
 
-  // Consentimiento de cookies 
+function declineCookies() {
+  LectumCookies.revokeConsent();
+  document.getElementById("cookieBanner").style.display = "none";
+}
+
+
   function hasConsent() {
     return get(CONSENT_KEY) === true;
   }
