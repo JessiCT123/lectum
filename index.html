@@ -38,6 +38,7 @@
         <a href="Fantasía.html" target="_self">Fantasía</a>
         <a href="Terror.html" target="_self">Terror</a>
         <a href="Juvenil.html" target="_self">Juvenil</a>
+        <a href="formulario.html" target="_self">Formulario</a>
     </nav>
 
     <br>
@@ -177,10 +178,21 @@
     </section>
     <hr>
 
-
+    <!-- BANNER DE COOKIES -->
+<div class="cookie-banner" id="cookieBanner">
+  <p>Usamos cookies para guardar tu biblioteca y preferencias. <a href="#">Política de cookies</a></p>
+  <div class="cb-btns">
+    <button class="cb-acc" onclick="acceptCookies()">Aceptar</button>
+    <button class="cb-dec" onclick="declineCookies()">Rechazar</button>
+  </div>
+</div>
     <footer>
-        <p>Nayeli Barahona &copy; 2025</p>
+        <p>Lectum  &copy; 2025</p>
+        <p>TFG</p>
     </footer>
+    <!-- Scripts: cookies primero, luego app -->
+<script src="cookies.js"></script>
+<script src="app.js"></script>
 </body>
 
 </html>
