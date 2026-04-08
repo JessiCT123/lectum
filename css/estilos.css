@@ -1,0 +1,43 @@
+/* Estilos - Complementam las utilidades de Tailwind con clases propias,
+    animaciones y personalización del scrollbar.*/
+
+/* TIPOGRAFÍA */
+.font-display { font-family: 'Playfair Display', Georgia, serif; } /*Títulos y encabezados*/
+.font-body { font-family: 'Source Sans 3', system-ui, sans-serif; } /*texto general*/
+
+/* TARJETAS DE LIBRO */
+.book-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); } /* El cubic-bezier da un efecto de rebote natural al elevarse. */
+.book-card:hover { transform: translateY(-8px); }
+
+/* NAVEGACIÓN - PESTAÑA ACTIVA
+Resalta la pestaña seleccionada con una línea inferior y cambia el color del texto al naranja oscuro. */
+.tab-active { border-bottom: 3px solid #c2410c; color: #c2410c; }
+
+/* ANIMACIONES */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); } /* Aparición del badge de estado en las tarjetas */
+  to { opacity: 1; transform: scale(1); } 
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); } /* Entrada de las tarjetas al renderizarse */
+  to { opacity: 1; transform: translateY(0); }
+}
+    /* Clases que aplican las animaciones */
+    .status-badge { animation: slideUp 0.4s ease-out; }
+    .slide-up { animation: slideUp 0.4s ease-out forwards; }
+
+/* ESTRELLAS DE VALORACIÓN
+Escala el icono SVG al hacer hover sobre el botón estrella. */
+.star-btn svg { transition: transform 0.2s ease; }
+.star-btn:hover svg { transform: scale(1.2); }
+
+/* SCROLL PERSONALIZADO
+Estiliza la barra de desplazamiento. */
+::-webkit-scrollbar              { width: 8px; height: 8px; }
+::-webkit-scrollbar-track        { background: #1a1a2e; }
+::-webkit-scrollbar-thumb        { background: #4a4a6a; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover  { background: #6a6a8a; }
+
+/* RESET GLOBAL - Asegura que padding y border se incluyan en el tamaño total
+    del elemento, evitando desbordamientos inesperados. */
+body { box-sizing: border-box; }
