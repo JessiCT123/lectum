@@ -10,9 +10,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   await iniciarSDKs();
   renderizarDestacados();
 
-  // Botón de perfil - Abre el modal de perfil/autenticación.
-  // El backdrop semitransparente lo cierra al hacer clic fuera.
-  document.getElementById('profile-btn').addEventListener('click', mostrarModalPerfil);
+  // Cierra el recuadro pequeño donde aparece la sesión pero al clicar fuera
   document.getElementById('profile-modal').addEventListener('click', (e) => {
     if (e.target.id === 'profile-modal') cerrarModalPerfil();
   });

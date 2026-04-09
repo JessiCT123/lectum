@@ -24,20 +24,28 @@ const BDLibros = [
 // TIENDAS - Usadas en el comparador de precios.
 // Los precios reales se generan aleatoriamente en func.js.
 const tiendas = [
-  { nombre: "Amazon",          icono: "📦", estrellas: 5, envio: "Envío gratis con Prime" },
-  { nombre: "Casa del Libro",  icono: "🏠", estrellas: 5, envio: "Envío gratis +19€" },
-  { nombre: "El Corte Inglés", icono: "🏬", estrellas: 5, envio: "Envío gratis +50€" },
-  { nombre: "Fnac",            icono: "🎵", estrellas: 4, envio: "Envío gratis +29€" },
-  { nombre: "Iberlibro",       icono: "📚", estrellas: 4, envio: "Variable por vendedor" }
+  { nombre: "Amazon", estrellas: 5, envio: "Envío gratis con Prime" },
+  { nombre: "Casa del Libro", estrellas: 5, envio: "Envío gratis +19€" },
+  { nombre: "El Corte Inglés", estrellas: 5, envio: "Envío gratis +50€" },
+  { nombre: "Fnac", estrellas: 4, envio: "Envío gratis +29€" },
+  { nombre: "Iberlibro", estrellas: 4, envio: "Variable por vendedor" }
 ];
 
 // RESEÑAS DE LA COMUNIDAD - Datos estáticos de ejemplo. Las reseñas del usuario
 // se guardan dinámicamente en dataSdk (datosUser).
-const reseñasComunidad = [
+const resenasComunidad = [
   { idLibro: "1", usuario: "María L.", valoracion: 5, texto: "Una obra maestra absoluta. García Márquez nos transporta a un mundo mágico e inolvidable.", fecha: "2024-01-15" },
   { idLibro: "2", usuario: "Carlos R.", valoracion: 5, texto: "Más relevante que nunca. Una advertencia sobre los peligros del totalitarismo.", fecha: "2024-01-10" },
   { idLibro: "8", usuario: "Ana P.", valoracion: 4, texto: "Perfecto para todas las edades. Me hizo enamorarme de la lectura.", fecha: "2024-01-08" },
   { idLibro: "9", usuario: "Luis M.", valoracion: 5, texto: "Simple pero profundo. Cada relectura revela nuevos significados.", fecha: "2024-01-05" }
+];
+
+// TABLA DE USUARIOS TEMPORAL 
+const tablaUsuarios = [
+  { nombre: "Belen",  password: "123456" },
+  { nombre: "Maria", password: "123456" },
+  { nombre: "Jessica", password: "123456" },
+  { nombre: "Nayeli", password: "123456" }
 ];
 
 // ESTADO GLOBAL - Variables compartidas entre func.js y events.js.
@@ -47,13 +55,13 @@ let pestañaActual = 'destacados'; // Pestaña activa
 let filtroEstadoActual = 'all'; // Filtro activo en "Mis Libros"
 let valoracionSeleccionada = 0; // Valoración seleccionada en el formulario de reseña
 let totalLibros = 0; // Número total de libros en la colección (límite: 999)
-let usuarioActual = null; // Usuario actual con sesión activa (o null si no hay sesión)
+let usuarioActual = null; // Se llenará con { id, nombre, avatar } desde MySQL
 
 // CONFIGURACIÓN POR DEFECTO - Valores iniciales de personalización visual de la app.
 // El usuario puede modificarlos desde el panel de edición.
 const configPorDefecto = {
   app_title: "Mi Biblioteca Personal",
-  welcome_message: "Descubre, organiza y comparte tus lecturas",
+  mensaje_bienvenida: "Descubre, organiza y comparte tus lecturas",
   background_color: "#0f0f1a",
   surface_color: "#1a1a2e",
   text_color: "#e8e6e3",
