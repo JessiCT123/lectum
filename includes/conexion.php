@@ -1,17 +1,19 @@
-<?php
+<?php 
 
-    $servidor = "localhost";
-    $usuario  = "root";
-    $password = ""; 
-    $base_datos = "biblioteca"; 
+    $host = 'localhost'; 
+    $dbname = 'bd_lectum'; 
+    $username = 'root'; 
+    $password = ''; 
 
-    $conexion = mysqli_connect($servidor, $usuario, $password, $base_datos);
-
-    if (!$conexion) {
-        die("Error de conexión a la base de datos: " . mysqli_connect_error());
-    }
-
-    // Para que acepte tildes y "ñ" correctamente
-    mysqli_set_charset($conexion, "utf8");
+    try { 
+        
+        $conn = new PDO("mysql:host=$host;dbname=$dbname", $username, $password); 
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
     
+    } catch (PDOException $pe) { 
+
+        die("Could not connect to the database $dbname :" . $pe->getMessage()); 
+    
+        } 
+
 ?>

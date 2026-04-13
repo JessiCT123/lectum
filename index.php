@@ -1,3 +1,9 @@
+<?php
+
+  include 'includes/conexion.php';
+
+?>
+
 <!doctype html>
 <html lang="es" class="h-full">
 
