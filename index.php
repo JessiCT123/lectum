@@ -1,8 +1,4 @@
-<?php
-
-  include 'includes/conexion.php';
-
-?>
+<?php include 'includes/conexion.php'; ?>
 
 <!doctype html>
 <html lang="es" class="h-full">
@@ -118,76 +114,9 @@
 </div>
 </section>
 
-<!-- PESTAÑA: EXPLORAR -->
-<section id="tab-explore" class="tab-content hidden">
 
-<div class="mb-6">
-  <h2 class="font-display text-xl font-semibold text-[#f4a261] mb-2">Explorar Libros</h2>
-  <p class="text-[#a8a5a0] text-sm">Filtra por género, autor o tipo de reseña</p>
-</div>
-
-<!-- Filtros - renderizarExplorar() -->
-<div class="bg-[#1a1a2e] rounded-xl p-4 mb-6 border border-[#2a2a4a]">
-<div class="flex flex-wrap gap-3">
-
-  <!-- Filtro por género -->
-  <select id="filter-genero" class="bg-[#2a2a4a] border border-[#3a3a5a] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#f4a261]">
-  <option value="">Todos los géneros</option>
-  <option value="ficcion">Ficción</option>
-  <option value="no-ficcion">No Ficción</option>
-  <option value="misterio">Misterio</option>
-  <option value="romance">Romance</option>
-  <option value="fantasia">Fantasía</option>
-  <option value="ciencia-ficcion">Ciencia Ficción</option>
-  <option value="historia">Historia</option>
-  <option value="biografia">Biografía</option>
-  </select>
-
-  <!-- Filtro por valoración - renderizarExplorar() -->
-  <select id="filter-valoracion" class="bg-[#2a2a4a] border border-[#3a3a5a] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#f4a261]">
-  <option value="">Todas las reseñas</option>
-  <option value="positive">Reseñas positivas (4-5)</option>
-  <option value="negative">Reseñas negativas (1-2)</option>
-  </select>
-
-  <!-- Filtro por autor -->
-  <input type="text" id="filter-autor" placeholder="Buscar por autor..."
-    class="bg-[#2a2a4a] border border-[#3a3a5a] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#f4a261] flex-1 min-w-48">
-
-</div>
-</div>
-
-<!-- Resultados - crearTarjetaLibro() -->
-<div id="explore-results" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4"></div>
-
-</section>
-
-<!-- PESTAÑA: MIS LIBROS -->
-<section id="tab-my-books" class="tab-content hidden">
-
-<div class="mb-6">
-  <h2 class="font-display text-xl font-semibold text-[#f4a261] mb-2">Mi Colección</h2>
-  <p class="text-[#a8a5a0] text-sm">Organiza tus lecturas actuales, terminadas y pendientes</p>
-</div>
-
-<!-- Filtros de estado — listeners en [events.js], actualizan filtroEstadoActual (data.js) -->
-<div class="flex gap-2 mb-6 flex-wrap">
-  <button class="status-filter-btn bg-[#f4a261] text-[#0f0f1a] px-4 py-2 rounded-full text-sm font-medium transition-all" data-status="all">Todos</button>
-  <button class="status-filter-btn bg-[#2a2a4a] px-4 py-2 rounded-full text-sm font-medium transition-all hover:bg-[#3a3a5a]" data-status="leyendo">Leyendo</button>
-  <button class="status-filter-btn bg-[#2a2a4a] px-4 py-2 rounded-full text-sm font-medium transition-all hover:bg-[#3a3a5a]" data-status="completado">Terminados</button>
-  <button class="status-filter-btn bg-[#2a2a4a] px-4 py-2 rounded-full text-sm font-medium transition-all hover:bg-[#3a3a5a]" data-status="pendiente">Pendientes</button>
-</div>
-
-<!-- Lista de libros — tarjetas generadas por [func.js] renderizarMisLibros() -->
-<div id="my-books-list" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4"></div>
-
-<!-- Estado vacío — mostrado/ocultado por [func.js] renderizarMisLibros() -->
-<div id="empty-my-books" class="hidden text-center py-12">
-  <h3 class="font-display text-lg text-[#a8a5a0] mb-2">Tu biblioteca está vacía</h3>
-  <p class="text-sm text-[#6a6a8a]">Explora libros y agrégalos a tu colección</p>
-</div>
-
-</section>
+<?php include 'explorar.php'; ?>
+<?php include 'misLibros.php'; ?>
 
 <!-- PESTAÑA RESEÑAS-->
 <section id="tab-reviews" class="tab-content hidden">
@@ -241,36 +170,8 @@
 </div>
 </section>
 
-<!-- PESTAÑA: COMPARADOR DE PRECIOS - renderizarComparadorPrecios() -->
-<section id="tab-prices" class="tab-content hidden">
 
-<div class="mb-6">
-  <h2 class="font-display text-xl font-semibold text-[#f4a261] mb-2">Comparador de Precios</h2>
-  <p class="text-[#a8a5a0] text-sm">Encuentra la mejor opción para comprar tus libros</p>
-</div>
-
-<!-- Selector de libro -->
-<div class="bg-[#1a1a2e] rounded-xl p-5 border border-[#2a2a4a] mb-6">
-  <select id="price-book-select" class="w-full bg-[#2a2a4a] border border-[#3a3a5a] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#f4a261]">
-  <option value="">Selecciona un libro para comparar precios...</option>
-  </select>
-</div>
-
-<!-- Resultado comparación - renderizarComparadorPrecios() -->
-<div id="price-comparison" class="hidden">
-  <!-- Info del libro -->
-  <div id="selected-book-info" class="bg-[#1a1a2e] rounded-xl p-5 border border-[#2a2a4a] mb-6"></div>
-  <!-- Tarjetas por tienda -->
-  <div id="store-prices" class="grid md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
-</div>
-
-<!-- Estado vacío -->
-<div id="price-empty" class="text-center py-12">
-  <h3 class="font-display text-lg text-[#a8a5a0] mb-2">Selecciona un libro</h3>
-  <p class="text-sm text-[#6a6a8a]">Compara precios entre diferentes tiendas</p>
-</div>
-
-</section>
+<?php include 'compararPrecios.php'; ?>
 
 </main>
 
