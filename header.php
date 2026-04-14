@@ -1,6 +1,9 @@
+<?php
+// Detecta qué página está activa comparando el nombre del archivo actual
+$paginaActual = basename($_SERVER['PHP_SELF']);
+?>
 <!doctype html>
 <html lang="es" class="h-full">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -59,31 +62,35 @@
 <nav class="bg-[#1a1a2e] border-b border-[#2a2a4a]">
 <div class="max-w-7xl mx-auto px-4">
 <div class="flex gap-1 overflow-x-auto">
-
+ 
+<a href="index.php" 
+class="nav-tab px-4 py-3 text-sm font-medium <?= $paginaActual === 'index.php' ? 'tab-active' : '' ?>">
+        Inicio
+      </a>
 <a href="destacados.php" 
-class="nav-tab tab-active px-4 py-3 text-sm font-medium">
-Destacados
-</a>
+class="nav-tab px-4 py-3 text-sm font-medium <?= $paginaActual === 'index.php' ? 'tab-active' : '' ?>">
+        Destacados
+      </a>
 
-<a href="explorar.php" 
-class="nav-tab px-4 py-3 text-sm font-medium">
-Explorar
-</a>
+      <a href="explorar.php"
+        class="nav-tab px-4 py-3 text-sm font-medium <?= $paginaActual === 'explorar.php' ? 'tab-active' : '' ?>">
+        Explorar
+      </a>
 
-<a href="mislibros.php" 
-class="nav-tab px-4 py-3 text-sm font-medium">
-Mis Libros
-</a>
+      <a href="mislibros.php"
+        class="nav-tab px-4 py-3 text-sm font-medium <?= $paginaActual === 'mislibros.php' ? 'tab-active' : '' ?>">
+        Mis Libros
+      </a>
 
-<a href="resenias.php" 
-class="nav-tab px-4 py-3 text-sm font-medium">
-Reseñas
-</a>
+      <a href="resenias.php"
+        class="nav-tab px-4 py-3 text-sm font-medium <?= $paginaActual === 'resenias.php' ? 'tab-active' : '' ?>">
+        Reseñas
+      </a>
 
-<a href="compararprecios.php" 
-class="nav-tab px-4 py-3 text-sm font-medium">
-Comparar Precios
-</a>
+      <a href="compararprecios.php"
+        class="nav-tab px-4 py-3 text-sm font-medium <?= $paginaActual === 'compararprecios.php' ? 'tab-active' : '' ?>">
+        Comparar Precios
+      </a>
 
 </div>
 </div>
