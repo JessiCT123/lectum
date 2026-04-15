@@ -17,6 +17,12 @@ try {
 
         if (!empty($nombre) && !empty($usuario) && !empty($email) && !empty($password) && !empty($password1)) {/*comprobamos que todos los datos estén llenos*/
 
+            if (!isset($_POST['regTerms'])) {
+                $_SESSION['error_message'] = 'Debes aceptar los términos y condiciones.';
+                header("Location: registros.php");
+                exit();
+            }
+
             if (!preg_match('/[A-Z]/', $usuario)) {
                 $_SESSION['error_message'] = 'El usuario debe contener al menos una mayúscula.';
                 header("Location: registros.php");
@@ -165,13 +171,12 @@ try {
             </div>
 
             <div class="check-group">
-                <input type="checkbox" id="regTerms" name="regTerms" />
+                <input type="checkbox" id="regTerms" name="regTerms" required />
                 <label for="regTerms">
                     Acepto los <a href="#">términos y condiciones</a> y la
                     <a href="#">política de privacidad</a>.
                 </label>
             </div>
-            <span class="error-msg" id="errRegTerms">Debes aceptar los términos.</span>
 
             <?php
             /*Si no se ha encontrado el usuario ni contraseña se mostrará el mensaje de error. */
