@@ -1,4 +1,31 @@
-<?php include 'includes/conexion.php'; ?>
+<?php include 
+'includes/conexion.php'; 
+
+$query = $conn->query("SELECT l.*, g.nombre as genero 
+                       FROM libros l 
+                       JOIN generos g ON l.genero_id = g.id");
+$libros = $query->fetchAll(PDO::FETCH_ASSOC);
+
+$queryResenias = $conn->query("SELECT r.*, u.usuario, l.titulo 
+                               FROM resenias r 
+                               JOIN usuarios u ON r.usuario_id = u.id 
+                               JOIN libros l ON r.libro_id = l.id");
+$resenias = $queryResenias->fetchAll(PDO::FETCH_ASSOC);
+//Comparador de precios
+$queryPrecios = $conn->query("SELECT p.*, t.nombre as tienda_nombre, t.icono as tienda_icono, t.estrellas, t.envio
+                               FROM precios p 
+                               JOIN tienda t ON p.tienda_id = t.id");
+$todosLosPrecios = $queryPrecios->fetchAll(PDO::FETCH_ASSOC);
+
+$id_usuario_prueba = 1; 
+$queryMisLibros = $conn->prepare("SELECT ul.*, l.titulo, l.portada, l.autor 
+                                  FROM usuario_libros ul 
+                                  JOIN libros l ON ul.libro_id = l.id 
+                                  WHERE ul.usuario_id = ?");
+$queryMisLibros->execute([$id_usuario_prueba]);
+$misLibros = $queryMisLibros->fetchAll(PDO::FETCH_ASSOC);
+
+?>
 
 <!doctype html>
 <html lang="es" class="h-full">
@@ -15,14 +42,22 @@
 <!-- Tailwind -->
 <script src="https://cdn.tailwindcss.com/3.4.17"></script>
 
-<!-- SDKs de la plataforma -->
-<script src="/_sdk/element_sdk.js"></script>  <!-- Personalización -->
-<script src="/_sdk/data_sdk.js"></script>      <!-- Persistencia de datos del usuario -->
+<!-- Font Awesome (para iconos tipo "fas fa-truck") -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<script>
+    const BDLibros = <?php echo json_encode($libros); ?>;
+    const BDResenias = <?php echo json_encode($resenias); ?>;
+
+    //misLibros.php
+    const BDMisLibros = <?php echo json_encode($misLibros); ?>;
+    //compararPrecios.php
+    const BDPrecios = <?php echo json_encode($todosLosPrecios); ?>;
+</script>
 
 <!-- Scripts de la aplicación (orden importante) -->
-<script src="js/data.js"></script>             <!-- [data.js] Datos estáticos y estado global -->
-<script src="js/func.js" defer></script>       <!-- [func.js] Funciones: render, modales, auth, SDK -->
-<script src="js/events.js" defer></script>     <!-- [events.js] Event listeners — arranca tras el DOM -->
+<script src="js/func.js" defer></script>      
+<script src="js/events.js" defer></script>   
 
 <!-- Fuentes Google -->
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -71,7 +106,7 @@
 <nav class="bg-[#1a1a2e] border-b border-[#2a2a4a]">
 <div class="max-w-7xl mx-auto px-4">
 <div class="flex gap-1 overflow-x-auto">
-  <button class="nav-tab tab-active px-4 py-3 text-sm font-medium whitespace-nowrap transition-colors hover:text-[#f4a261]" data-tab="featured">Destacados</button>
+  <button class="nav-tab tab-active px-4 py-3 text-sm font-medium whitespace-nowrap transition-colors hover:text-[#f4a261]" data-tab="featured">Inicio</button>
   <button class="nav-tab px-4 py-3 text-sm font-medium whitespace-nowrap transition-colors hover:text-[#f4a261] text-[#a8a5a0]" data-tab="explore">Explorar</button>
   <button class="nav-tab px-4 py-3 text-sm font-medium whitespace-nowrap transition-colors hover:text-[#f4a261] text-[#a8a5a0]" data-tab="my-books">Mis Libros</button>
   <button class="nav-tab px-4 py-3 text-sm font-medium whitespace-nowrap transition-colors hover:text-[#f4a261] text-[#a8a5a0]" data-tab="reviews">Reseñas</button>
@@ -83,7 +118,7 @@
 <!-- CONTENIDO PRINCIPAL -->
 <main class="max-w-7xl mx-auto px-4 py-6">
 
-<!-- PESTAÑA: DESTACADOS -->
+<!-- PESTAÑA: INICIO -->
 <section id="tab-featured" class="tab-content">
 
 <div class="mb-6">
@@ -134,7 +169,7 @@
   <form id="valoracion-form" class="space-y-4">
 
     <!-- Selector de libro - actualizarSelectorResenas() -->
-    <select id="valoracion-book-select" class="w-full bg-[#2a2a4a] border border-[#3a3a5a] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#f4a261]">
+    <select id="valoracion-book-select" onchange="mostrarPreciosLibro(this.value)" class="w-full bg-[#2a2a4a] border border-[#3a3a5a] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#f4a261]">
     <option value="">Selecciona un libro de tu colección...</option>
     </select>
 
@@ -177,25 +212,21 @@
 
 <!-- MODALES -->
 
-<!-- Modal detalle de libro
-   Abierto por mostrarModalLibro()
-   Cerrado por cerrarModal() -->
+<!-- Modal detalle de libro -->
 <div id="book-modal" class="fixed inset-0 bg-black/80 z-50 hidden items-center justify-center p-4 overflow-y-auto">
 <div class="bg-[#1a1a2e] rounded-2xl max-w-2xl w-full max-h-[90%] overflow-y-auto border border-[#2a2a4a]">
   <div id="modal-content" class="p-6"></div>
 </div>
 </div>
 
-<!-- Modal perfil y autenticación 
-   Abierto por mostrarModalPerfil()
-   Cerrado por cerrarModalPerfil() -->
+<!-- Modal perfil y autenticación -->
 <div id="profile-modal" class="fixed inset-0 bg-black/80 z-50 hidden items-center justify-center p-4 overflow-y-auto">
 <div class="bg-[#1a1a2e] rounded-2xl max-w-sm w-full border border-[#2a2a4a]">
   <div id="profile-content" class="p-6"></div>
 </div>
 </div>
 
-<!-- TOAST — Notificación flotante -->
+<!-- TOAST - Notificación flotante -->
 <div id="toast" class="fixed bottom-4 right-4 bg-[#2a9d8f] text-white px-4 py-3 rounded-lg shadow-lg transform translate-y-20 opacity-0 transition-all duration-300 z-50">
 <span id="toast-message"></span>
 </div>

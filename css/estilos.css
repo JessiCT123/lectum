@@ -400,17 +400,18 @@ textarea { resize: vertical; }
 #store-prices .text-\[\#f4a261\] { color: var(--dorado) !important; }
 #store-prices .text-\[\#2a9d8f\] { color: #2a7a2a !important; }
 
-/* TARJETAS DE TIENDA */
+/* TARJETAS DE LAS TIENDAS EN EL COMPARADOR DE PRECIOS */
 #store-prices > div {
   background: var(--fondo-superficie) !important;
-  border: 1px solid var(--borde) !important;
+  border: 2px solid var(--borde) !important;
   border-radius: var(--radio) !important;
   box-shadow: var(--sombra-xs);
-  transition: box-shadow var(--transicion), border-color var(--transicion);
+  transition: all 0.3s ease-in-out;
 }
 #store-prices > div:hover {
-  box-shadow: var(--sombra-sm);
-  border-color: var(--dorado-palido) !important;
+  box-shadow: var(--sombra-md);
+  border-color: 2px solid #a65d37 !important;
+  transform: translateY(-4px);
 }
 
 /* AUTORES DEL MOMENTO */

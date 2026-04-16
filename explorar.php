@@ -14,21 +14,20 @@
             <!-- Filtro por género -->
             <select id="filter-genero" class="bg-[#2a2a4a] border border-[#3a3a5a] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#f4a261]">
                 <option value="">Todos los géneros</option>
-                <option value="ficcion">Ficción</option>
-                <option value="no-ficcion">No Ficción</option>
-                <option value="misterio">Misterio</option>
-                <option value="romance">Romance</option>
-                <option value="fantasia">Fantasía</option>
-                <option value="ciencia-ficcion">Ciencia Ficción</option>
-                <option value="historia">Historia</option>
-                <option value="biografia">Biografía</option>
+                <?php
+                    //obtenemos los géneros de la BBDD
+                    $queryGen = $conn->query("SELECT * FROM generos");
+                    while($gen = $queryGen->fetch(PDO::FETCH_ASSOC)) {
+                        echo "<option value='{$gen['nombre']}'>" . ucfirst($gen['nombre']) . "</option>";
+                    }
+                ?>
             </select>
 
             <!-- Filtro por valoración -->
             <select id="filter-valoracion" class="bg-[#2a2a4a] border border-[#3a3a5a] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#f4a261]">
                 <option value="">Todas las reseñas</option>
-                <option value="positive">Reseñas positivas (4-5)</option>
-                <option value="negative">Reseñas negativas (1-2)</option>
+                <option value="positivas">Reseñas positivas (4-5)</option>
+                <option value="negativas">Reseñas negativas (1-2)</option>
             </select>
 
             <!-- Filtro por autor -->

@@ -1,6 +1,20 @@
 CREATE DATABASE bd_lectum;
-
 use bd_lectum;
+
+CREATE TABLE generos (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  nombre VARCHAR(100)
+);
+
+INSERT INTO generos (nombre) VALUES
+  ('ficcion'),
+  ('ciencia-ficcion'),
+  ('fantasia'),
+  ('romance'),
+  ('misterio'),
+  ('no-ficcion'),
+  ('biografia'),
+  ('historia');
 
 CREATE TABLE libros (
   id INT AUTO_INCREMENT PRIMARY KEY,
@@ -33,6 +47,20 @@ INSERT INTO libros VALUES
   (14,'Crimen y castigo','Fiódor Dostoyevski',1,4.4,7800,1866,671,'imagen14.jpg','Un joven estudiante comete un crimen y enfrenta las consecuencias morales.'),
   (15,'El alquimista','Paulo Coelho',1,4.2,16500,1988,208,'imagen15.jpg','Un pastor andaluz viaja en busca de un tesoro y descubre su leyenda personal.');
 
+CREATE TABLE tienda (
+  id INT AUTO_INCREMENT PRIMARY KEY,	
+  nombre VARCHAR(50),
+  icono VARCHAR(100),
+  estrellas double,
+  envio VARCHAR(50)
+);
+
+INSERT INTO tienda (nombre, icono, estrellas, envio) VALUES
+  ('Amazon', 'iconoAmazon.jpg',5,'Envío gratis con Prime'),
+  ('Casa del Libro', 'iconoCasa.jpg',5,'Envío gratis Envío gratis +19€'),
+  ('El Corte Inglés', 'iconoCorte.jpg',5,'Envío gratis Envío gratis +50€'),
+  ('Fnac', 'iconoFac.jpg',4,'Envío gratis Envío gratis +29€'),
+  ('Iberlibro', 'iconoIber.jpg',4,'Variable por vendedor');
 
 CREATE TABLE precios (
   id INT AUTO_INCREMENT PRIMARY KEY,
@@ -123,31 +151,17 @@ INSERT INTO precios (libro_id, tienda_id, precio, url) VALUES
 
 CREATE TABLE usuarios (
   id INT AUTO_INCREMENT PRIMARY KEY,
+  nombre VARCHAR(50),
   usuario VARCHAR(50),
   password VARCHAR(100),
-  fecha_registro datetime
+  fecha_registro datetime NOT NULL DEFAULT current_timestamp()
 );
 
-INSERT INTO usuarios (usuario, password, fecha_registro) VALUES
-  ('María L', '12345678', "2026-01-15"),
-  ('Carlos R', '12345678', "2026-01-15"),
-  ('Ana P', '12345678', "2026-01-15"),
-  ('Luis M', '12345678', "2026-01-15");
-
-CREATE TABLE tienda (
-  id INT AUTO_INCREMENT PRIMARY KEY,	
-  nombre VARCHAR(50),
-  icono VARCHAR(100),
-  estrellas double,
-  envio VARCHAR(50)
-);
-
-INSERT INTO tienda (nombre, icono, estrellas, envio) VALUES
-  ('Amazon', 'iconoAmazon.jpg',5,'Envío gratis con Prime'),
-  ('Casa del Libro', 'iconoCasa.jpg',5,'Envío gratis Envío gratis +19€'),
-  ('El Corte Inglés', 'iconoCorte.jpg',5,'Envío gratis Envío gratis +50€'),
-  ('Fnac', 'iconoFac.jpg',4,'Envío gratis Envío gratis +29€'),
-  ('Iberlibro', 'iconoIber.jpg',4,'Variable por vendedor');
+INSERT INTO usuarios (id, nombre, usuario, password, fecha_registro) VALUES
+  (1, 'Maria', 'maria_user', '12345678', '2026-01-15'),
+  (2, 'Belen', 'belen_user', '12345678', '2026-01-15'),
+  (3, 'Jessica', 'jessi_user', '12345678', '2026-01-15'),
+  (4, 'Nayeli', 'nayeli_user', '12345678', '2026-01-15');
 
 CREATE TABLE resenias (
   id INT AUTO_INCREMENT PRIMARY KEY,
@@ -178,17 +192,12 @@ CREATE TABLE usuario_libros (
   FOREIGN KEY (libro_id) REFERENCES libros(id)
 );
 
-CREATE TABLE generos (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  nombre VARCHAR(100)
-);
+CREATE TABLE remember_tokens (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT NOT NULL,
+    token_hash CHAR(64) NOT NULL,
+    f_caducidad DATETIME NOT NULL,
+    f_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
-INSERT INTO generos (nombre) VALUES
-  ('ficcion'),
-  ('ciencia-ficcion'),
-  ('fantasia'),
-  ('romance'),
-  ('misterio'),
-  ('no-ficcion'),
-  ('biografia'),
-  ('historia');
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
+);
