@@ -12,7 +12,10 @@ function crearTarjetaLibro(libro) {
     const rutaImagen = `imagenes/${libro.portada}`; 
 
     tarjeta.innerHTML = `
-        <div class="aspect-[3/4] mb-3 overflow-hidden rounded-lg bg-[#1a1a2e]">
+        <div class="aspect-[3/4] mb-3 overflow-hidden rounded-lg bg-[#1a1a2e] relative">
+            <span class="absolute top-2 left-2 bg-black/70 backdrop-blur-sm text-white text-[10px] px-2 py-1 rounded z-10">
+                ${libro.genero}
+            </span>
             <img src="${rutaImagen}" class="w-full h-full object-cover" alt="${libro.titulo}">
         </div>
         <h4 class="font-medium text-sm line-clamp-1">${libro.titulo}</h4>
@@ -25,6 +28,23 @@ function crearTarjetaLibro(libro) {
 
     tarjeta.addEventListener('click', () => mostrarModalLibro(libro));
     return tarjeta;
+}
+//Index tarjetas de autores destacados
+function verAutorFiltrado(nombreAutor) {
+    // 1. Cambiamos a la pestaña de explorar
+    cambiarPestana('explore');
+    
+    // 2. Buscamos el input de filtro por autor en la sección explorar
+    const filtroAutorInput = document.getElementById('filter-autor');
+    
+    if (filtroAutorInput) {
+        filtroAutorInput.value = nombreAutor;
+        // 3. Ejecutamos el renderizado de exploración para que aplique el filtro
+        renderizarExplorar();
+        
+        // Opcional: scroll hacia arriba para ver los resultados
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 }
 
 // PESTAÑA INICIO

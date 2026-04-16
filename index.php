@@ -1,6 +1,7 @@
 <?php include 
 'includes/conexion.php'; 
 
+
 $query = $conn->query("SELECT l.*, g.nombre as genero 
                        FROM libros l 
                        JOIN generos g ON l.genero_id = g.id");
@@ -141,9 +142,25 @@ $misLibros = $queryMisLibros->fetchAll(PDO::FETCH_ASSOC);
   </div>
 
   <!-- Autores del momento - renderizarDestacados() -->
-  <div class="bg-[#1a1a2e] rounded-xl p-5 border border-[#2a2a4a]">
-  <h3 class="font-display text-lg font-semibold mb-4 flex items-center gap-2">Autores del Momento</h3>
-  <div id="trending-autores" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"></div>
+    <div class="bg-[#1a1a2e] rounded-xl p-5 border border-[#2a2a4a]">
+    <h3 class="font-display text-lg font-semibold mb-4 text-[#f4a261]">Autores del Momento</h3>
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <?php
+      $autores = [];
+      foreach ($libros as $libro) { $autores[$libro['autor']][] = $libro; }
+      foreach (array_slice($autores, 0, 8, true) as $nombreAutor => $librosAutor):
+          $totalLibros = count($librosAutor);
+          $media = array_sum(array_column($librosAutor, 'valoracion')) / ($totalLibros ?: 1);
+      ?>
+        <div onclick="verAutorFiltrado('<?= addslashes($nombreAutor) ?>')"
+            class="bg-[#2a2a4a] p-4 rounded-xl hover:bg-[#34345a] transition-all cursor-pointer border border-[#3a3a5a] hover:border-[#f4a261]">
+            <h4 class="font-semibold text-sm text-[#f4a261]"><?= htmlspecialchars($nombreAutor) ?></h4>
+            <p class="text-xs text-[#a8a5a0] mt-1">
+              <?= $totalLibros ?> libros • <i class="fas fa-star text-yellow-500 text-[10px]"></i> <?= number_format($media, 1) ?>
+            </p>
+        </div>
+      <?php endforeach; ?>
+    </div>
   </div>
 
 </div>
@@ -234,3 +251,4 @@ $misLibros = $queryMisLibros->fetchAll(PDO::FETCH_ASSOC);
 </div>
 </body>
 </html>
+<?php include 'footer.php'; ?>
