@@ -17,6 +17,12 @@ try {
 
         if (!empty($nombre) && !empty($usuario) && !empty($email) && !empty($password) && !empty($password1)) {/*comprobamos que todos los datos estén llenos*/
 
+            if (!isset($_POST['regTerms'])) {
+                $_SESSION['error_message'] = 'Debes aceptar los términos y condiciones.';
+                header("Location: registros.php");
+                exit();
+            }
+
             if (!preg_match('/[A-Z]/', $usuario)) {
                 $_SESSION['error_message'] = 'El usuario debe contener al menos una mayúscula.';
                 header("Location: registros.php");
@@ -98,7 +104,7 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="estilos.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 
 </head>
@@ -165,13 +171,12 @@ try {
             </div>
 
             <div class="check-group">
-                <input type="checkbox" id="regTerms" name="regTerms" />
+                <input type="checkbox" id="regTerms" name="regTerms" required />
                 <label for="regTerms">
                     Acepto los <a href="#">términos y condiciones</a> y la
                     <a href="#">política de privacidad</a>.
                 </label>
             </div>
-            <span class="error-msg" id="errRegTerms">Debes aceptar los términos.</span>
 
             <?php
             /*Si no se ha encontrado el usuario ni contraseña se mostrará el mensaje de error. */
@@ -196,7 +201,7 @@ try {
 
         <br>
 
-        <a href="index.html"><button type="submit" name="volver" class="submit-btn">Volver</button></a>
+        <a href="index.php"><button type="submit" name="volver" class="submit-btn">Volver</button></a>
 
     </div>
 

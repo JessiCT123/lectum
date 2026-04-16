@@ -1,40 +1,65 @@
-<!-- MIS LIBROS -->
-
 <?php
 session_start();
- include 'backend/conexion.php';
- include 'header.php';
+include 'backend/conexion.php';
+include 'header.php';
+
+$userId = isset($_SESSION['id']) ? $_SESSION['id'] : null;
+$isLoggedIn = $userId ? 'true' : 'false';
+
+// Carga de datos base y colección
+$librosBase = $conn->query("SELECT l.*, g.nombre AS genero_nombre FROM libros l JOIN generos g ON l.genero_id = g.id")->fetchAll(PDO::FETCH_ASSOC);
+$coleccionUsuario = [];
+if ($userId) {
+    $stmt = $conn->prepare("SELECT libro_id, estado FROM usuario_libros WHERE usuario_id = :uid");
+    $stmt->execute([':uid' => $userId]);
+    $coleccionUsuario = $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 ?>
 
-<section id="tab-my-books" class="tab-content hidden">
-    <div class="mb-6 flex justify-between items-end">
-        <div>
-            <h2 class="font-display text-xl font-semibold text-[#f4a261] mb-2">Mis Libros</h2>
-            <p class="text-[#a8a5a0] text-sm">Gestiona tu biblioteca personal</p>
-        </div>
-        <div class="text-right">
-            <span id="count-total" class="text-2xl font-bold text-white">0</span>
-            <p class="text-[10px] text-gray-500 uppercase">Total</p>
-        </div>
+<main class="flex-grow-container max-w-7xl mx-auto px-6 pt-2 pb-10 bg-transparent">
+
+    <div class="mb-6">
+        <h2 class="font-display text-xl font-semibold text-[#f4a261] mb-2">Mi Colección</h2>
+        <p class="text-[#a8a5a0] text-sm">Organiza tus lecturas actuales, terminadas y pendientes</p>
     </div>
 
-    <div class="flex gap-2 mb-8 flex-wrap">
-        <button class="filter-btn active-status bg-[#f4a261] text-[#0f0f1a] px-5 py-2 rounded-xl text-sm font-bold shadow-lg" onclick="filtrarMisLibros('all', this)">Todos</button>
-        <button class="filter-btn bg-[#2a2a4a] text-white px-5 py-2 rounded-xl text-sm font-medium hover:bg-[#34345a]" onclick="filtrarMisLibros('leyendo', this)">Leyendo</button>
-        <button class="filter-btn bg-[#2a2a4a] text-white px-5 py-2 rounded-xl text-sm font-medium hover:bg-[#34345a]" onclick="filtrarMisLibros('completado', this)">Terminados</button>
-        <button class="filter-btn bg-[#2a2a4a] text-white px-5 py-2 rounded-xl text-sm font-medium hover:bg-[#34345a]" onclick="filtrarMisLibros('pendiente', this)">Pendientes</button>
+    <!-- Filtros de estado -->
+    <div class="flex flex-wrap gap-3 mb-8 status-filters">
+        <button onclick="filtrarColeccion('all', this)"
+            class="status-filter-btn bg-[#f4a261] text-[#0f0f1a] px-3 py-1.5 rounded-lg text-[11px] font-bold uppercase tracking-widest transition-all">
+            Todos
+        </button>
+        <button onclick="filtrarColeccion('leyendo', this)"
+            class="status-filter-btn bg-[#2a2a4a] text-[#a8a5a0] hover:bg-[#2a9d8f] hover:text-white px-3 py-1.5 rounded-lg text-[11px] font-bold uppercase tracking-widest transition-all border border-[#3a3a5a]">
+            Leyendo
+        </button>
+        <button onclick="filtrarColeccion('terminado', this)"
+            class="status-filter-btn bg-[#2a2a4a] text-[#a8a5a0] hover:bg-[#f4a261] hover:text-[#0f0f1a] px-3 py-1.5 rounded-lg text-[11px] font-bold uppercase tracking-widest transition-all border border-[#3a3a5a]">
+            Terminados
+        </button>
+        <button onclick="filtrarColeccion('pendiente', this)"
+            class="status-filter-btn bg-[#2a2a4a] text-[#a8a5a0] hover:bg-gray-500 hover:text-white px-3 py-1.5 rounded-lg text-[11px] font-bold uppercase tracking-widest transition-all border border-[#3a3a5a]">
+            Pendientes
+        </button>
     </div>
 
-    <div id="my-books-grid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6"></div>
+    <!-- Grid de libros -->
+    <div id="grid-coleccion" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 books-grid"></div>
 
-    <div id="empty-my-books" class="hidden text-center py-20 bg-[#1a1a2e] rounded-3xl border border-[#2a2a4a]">
-        <i class="fas fa-layer-group text-4xl text-gray-600 mb-4"></i>
-        <h3 class="text-white font-semibold">Tu biblioteca está vacía</h3>
+    <!-- Mensaje vacío -->
+    <div id="msg-vacio" class="hidden text-center py-20">
+        <div class="text-6xl mb-4"></div>
+        <p id="txt-vacio" class="text-[#a8a5a0] text-sm italic"></p>
     </div>
-</section>
+
+</main>
 
 <script>
-    window.LIBROS = <?= json_encode($libros) ?>;
-    window.MI_COLECCION = <?= json_encode($coleccionUsuario) ?>;
+    window.DB_LIBROS = <?= json_encode($librosBase) ?>;
+    window.USER_COL = <?= json_encode($coleccionUsuario) ?>;
+    window.SESION_ACTIVA = <?= $isLoggedIn ?>;
+
+    document.addEventListener('DOMContentLoaded', renderColeccion);
 </script>
+
 <?php include 'footer.php'; ?>

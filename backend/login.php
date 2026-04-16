@@ -49,13 +49,12 @@ try {
                 setcookie("remember_token", $token, [
                     'expires' => time() + (86400 * 15),
                     'path' => '/',
-                    'httponly' => true,
-                    'samesite' => 'Strict'
-                    // 'secure' => true // activar si usas HTTPS
+                    'httponly' => true, // No se puede acceder a la cookie desde JavaScript
+                    'samesite' => 'Strict' // Evita que la cookie se envíe en peticiones externas 
                 ]);
             }
 
-            header("Location: index.html");
+            header("Location: index.php");
             exit();
         } else {
             $_SESSION['error_message'] = 'Usuario/email o contraseña incorrectos.';

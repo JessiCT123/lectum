@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar Sesión</title>
-    <link rel="stylesheet" href="estilos.css">
+    <link rel="stylesheet" href="css/estilos.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 </head>
 
@@ -37,13 +37,11 @@
                 </div>
             </div>
 
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;font-size:.82rem">
-                <label style="display:flex;align-items:center;gap:.4rem;color:var(--text-muted);cursor:pointer">
-                    <input type="checkbox" name="rememberMe" style="accent-color:var(--gold)" />
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; font-size:13px;">
+                <label style="display:flex; align-items:center; gap:6px; color:#666; cursor:pointer;">
+                    <input type="checkbox" name="rememberMe" style="accent-color:#caa64b;" />
                     Recordarme
                 </label>
-                <!--<a href="#" style="color:var(--gold);text-decoration:underline"
-               onclick="showForgotPw()">¿Olvidaste tu contraseña?</a>-->
             </div>
 
             <?php
@@ -62,13 +60,13 @@
         <br>
         <p>¿No tienes cuenta?</p>
 
-            
-            <a href="registros.php"><button class="submit-btn">Registrarse</button></a>
 
-            <br><br>
+        <a href="registros.php"><button class="submit-btn">Registrarse</button></a>
 
-            <a href="index.html"><button type="submit" name="volver" class="submit-btn">Volver</button></a>
-        
+        <br><br>
+
+        <a href="index.php"><button type="submit" name="volver" class="submit-btn">Volver</button></a>
+
         <script>
             function togglePw(inputId, btn) {
                 const input = document.getElementById(inputId);

@@ -1,4 +1,4 @@
-CREATE DATABASE bd_lectum;
+
 use bd_lectum;
 
 CREATE TABLE generos (
@@ -167,7 +167,6 @@ CREATE TABLE resenias (
   FOREIGN KEY (libro_id) REFERENCES libros(id),
   FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
 );
-
 INSERT INTO resenias (libro_id, usuario_id, valoracion, texto, fecha) VALUES
 (1, 1, 5, 'Una obra maestra absoluta. García Márquez nos transporta a un mundo mágico e inolvidable.', '2026-01-15'),
 (2, 2, 5, 'Más relevante que nunca. Una advertencia sobre los peligros del totalitarismo.', '2026-01-10'),

@@ -93,6 +93,7 @@ if (isset($_SESSION['user_id'])) {
   <div class="bg-[#1a1a2e] rounded-xl p-5 border border-[#2a2a4a]">
   <h3 class="font-display text-lg font-semibold mb-4 text-white">Autores del Momento</h3>
   <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+
   <?php
   $autores = [];
   foreach ($libros as $libro) { $autores[$libro['autor']][] = $libro; }
@@ -100,7 +101,8 @@ if (isset($_SESSION['user_id'])) {
       $totalLibros = count($librosAutor);
       $media = array_sum(array_column($librosAutor, 'valoracion')) / $totalLibros;
   ?>
-    <div onclick="verAutor('<?= addslashes($nombreAutor) ?>', <?= $totalLibros ?>, <?= number_format($media, 1) ?>)" 
+
+    <div onclick="verAutor('<?= addslashes($nombreAutor) ?>')" 
          class="bg-[#2a2a4a] p-4 rounded-xl hover:bg-[#34345a] transition-all cursor-pointer border border-[#3a3a5a] hover:border-[#f4a261]">
         <h4 class="font-semibold text-sm text-[#f4a261]"><?= htmlspecialchars($nombreAutor) ?></h4>
         <p class="text-xs text-[#a8a5a0] mt-1">
@@ -124,7 +126,7 @@ if (isset($_SESSION['user_id'])) {
   window.TIENDAS = <?= json_encode($tiendas) ?>;
   window.RESENIAS = <?= json_encode($resenias) ?>;
 
-function verLibro(libro) {
+  function verLibro(libro) {
     abrirUI(`
         <div class="relative text-center">
             <button onclick="cerrarUI()" class="absolute -top-4 -right-2 w-10 h-10 bg-[#f4a261] text-[#0f0f1a] rounded-full flex items-center justify-center transition-all z-[110] shadow-xl font-bold border-2 border-[#0f0f1a] hover:scale-110">
