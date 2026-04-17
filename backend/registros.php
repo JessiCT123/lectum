@@ -5,7 +5,7 @@ include("conexion.php");
 try {
 
     if (isset($_POST['volver'])) {/*Si escoge volver lo enviará a index.php */
-        header("Location: index.php");
+        header("Location: /index.php");
         exit();
     }
     if (isset($_POST['nuevo'])) {

@@ -54,7 +54,7 @@ try {
                 ]);
             }
 
-            header("Location: index.php");
+           header("Location: /index.php");
             exit();
         } else {
             $_SESSION['error_message'] = 'Usuario/email o contraseña incorrectos.';
