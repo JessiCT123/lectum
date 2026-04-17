@@ -1,4 +1,7 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 // Detecta qué página está activa comparando el nombre del archivo actual
 $paginaActual = basename($_SERVER['PHP_SELF']);
 ?>
@@ -44,14 +47,17 @@ $paginaActual = basename($_SERVER['PHP_SELF']);
 </svg>
 </div>
 
-<!-- Botón perfil- mostrarModalPerfil() -->
-<button id="boton-perfil" onclick="mostrarModalPerfil()" class="relative w-10 h-10 rounded-full bg-[#2a2a4a] flex items-center justify-center overflow-hidden border border-transparent hover:border-[#f4a261] transition-all">
-    <span id="icono-por-defecto" class="text-xl">
-      <?= isset($_SESSION['user_id']) ? '✅' : '👤' ?>
-    </span>
-    
-    <img id="avatar-seleccionado-user" src="" class="hidden w-full h-full object-cover">
-</button>
+<!-- Sesiones -->
+<?php if (isset($_SESSION['id'])): ?>
+    <button id="boton-perfil" onclick="mostrarModalPerfil()" class="relative w-10 h-10 rounded-full bg-[#2a2a4a] flex items-center justify-center overflow-hidden border border-transparent hover:border-[#f4a261] transition-all">
+        <span id="icono-por-defecto" class="text-xl"><a href="backend/cerrarSesion.php">✅</a></span>
+        <img id="avatar-seleccionado-user" src="" class="hidden w-full h-full object-cover">
+    </button>
+<?php else: ?>
+    <a href="backend/sesion.php" id="boton-perfil" class="relative w-10 h-10 rounded-full bg-[#2a2a4a] flex items-center justify-center overflow-hidden border border-transparent hover:border-[#f4a261] transition-all">
+        <span id="icono-por-defecto" class="text-xl">👤</span>
+    </a>
+<?php endif; ?>
 
 </div>
 </div>
@@ -67,18 +73,14 @@ $paginaActual = basename($_SERVER['PHP_SELF']);
 class="nav-tab px-4 py-3 text-sm font-medium <?= $paginaActual === 'index.php' ? 'tab-active' : '' ?>">
         Inicio
       </a>
-<a href="destacados.php" 
-class="nav-tab px-4 py-3 text-sm font-medium <?= $paginaActual === 'index.php' ? 'tab-active' : '' ?>">
-        Destacados
-      </a>
 
       <a href="explorar.php"
         class="nav-tab px-4 py-3 text-sm font-medium <?= $paginaActual === 'explorar.php' ? 'tab-active' : '' ?>">
         Explorar
       </a>
 
-      <a href="mislibros.php"
-        class="nav-tab px-4 py-3 text-sm font-medium <?= $paginaActual === 'mislibros.php' ? 'tab-active' : '' ?>">
+      <a href="misLibros.php"
+        class="nav-tab px-4 py-3 text-sm font-medium <?= $paginaActual === 'misLibros.php' ? 'tab-active' : '' ?>">
         Mis Libros
       </a>
 
@@ -87,8 +89,8 @@ class="nav-tab px-4 py-3 text-sm font-medium <?= $paginaActual === 'index.php' ?
         Reseñas
       </a>
 
-      <a href="compararprecios.php"
-        class="nav-tab px-4 py-3 text-sm font-medium <?= $paginaActual === 'compararprecios.php' ? 'tab-active' : '' ?>">
+      <a href="compararPrecios.php"
+        class="nav-tab px-4 py-3 text-sm font-medium <?= $paginaActual === 'compararPrecios.php' ? 'tab-active' : '' ?>">
         Comparar Precios
       </a>
 
