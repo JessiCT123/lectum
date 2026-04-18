@@ -623,8 +623,6 @@ textarea {
   background: var(--gold-light);
 }
 
-/*  modo responsive"Diferentes formatos"*/
-
 
 /* formularios login y registro */
 
@@ -781,6 +779,8 @@ textarea {
   color: #c9933a;
   text-decoration: underline;
 }
+
+/*  modo responsive diferentes formatos*/
 
 /*tablet*/
 @media (max-width: 768px) {
