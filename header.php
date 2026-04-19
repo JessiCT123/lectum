@@ -68,28 +68,32 @@ $paginaActual = basename($_SERVER['PHP_SELF']);
 <nav class="bg-[#1a1a2e] border-b border-[#2a2a4a]">
 <div class="max-w-7xl mx-auto px-4">
 <div class="flex gap-1 overflow-x-auto">
- 
-<a href="index.php" 
+
+
+ <!-- añadimos rutas absolutas / para evitar fallos -->
+
+
+<a href="/index.php" 
 class="nav-tab px-4 py-3 text-sm font-medium <?= $paginaActual === 'index.php' ? 'tab-active' : '' ?>">
         Inicio
       </a>
 
-      <a href="explorar.php"
+      <a href="/explorar.php"
         class="nav-tab px-4 py-3 text-sm font-medium <?= $paginaActual === 'explorar.php' ? 'tab-active' : '' ?>">
         Explorar
       </a>
 
-      <a href="misLibros.php"
+      <a href="/misLibros.php"
         class="nav-tab px-4 py-3 text-sm font-medium <?= $paginaActual === 'misLibros.php' ? 'tab-active' : '' ?>">
         Mis Libros
       </a>
 
-      <a href="resenias.php"
+      <a href="/resenias.php"
         class="nav-tab px-4 py-3 text-sm font-medium <?= $paginaActual === 'resenias.php' ? 'tab-active' : '' ?>">
         Reseñas
       </a>
 
-      <a href="compararPrecios.php"
+      <a href="/compararPrecios.php"
         class="nav-tab px-4 py-3 text-sm font-medium <?= $paginaActual === 'compararPrecios.php' ? 'tab-active' : '' ?>">
         Comparar Precios
       </a>

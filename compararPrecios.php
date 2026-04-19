@@ -1,3 +1,8 @@
+<?php
+session_start();
+include 'backend/conexion.php';
+include 'header.php';
+?>
 <!-- COMPARADOR DE PRECIOS -->
 
 <section id="tab-prices" class="tab-content hidden">
@@ -29,3 +34,4 @@
     </div>
 
 </section>
+<?php include 'footer.php'; ?>

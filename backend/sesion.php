@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar Sesión</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 </head>
 
@@ -65,7 +65,7 @@
 
         <br><br>
 
-        <a href="index.php"><button type="submit" name="volver" class="submit-btn">Volver</button></a>
+        <a href="../index.php"><button type="submit" name="volver" class="submit-btn">Volver</button></a>
 
         <script>
             function togglePw(inputId, btn) {
@@ -80,15 +80,13 @@
                 }
             }
         </script>
-
-</body>
-
-<br>
-
 <footer>
-
-    <p>© 2026 Lectum</p>
+ <p class="text-sm text-[#a8a5a0] text-center md:text-left">
+      <span class="font-display text-[#f4a261]">Lectum</span> © 2025/2026 · Proyecto fin de grado
+    </p>
 
 </footer>
+
+</body>
 
 </html>
