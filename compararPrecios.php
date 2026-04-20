@@ -9,8 +9,8 @@
 
     <!-- Selector de libro -->
     <div class="bg-[#1a1a2e] rounded-xl p-5 border border-[#2a2a4a] mb-6">
-        <select id="price-book-select" class="w-full bg-[#2a2a4a] border border-[#3a3a5a] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#f4a261]"
-            option value="">Selecciona un libro para comparar precios...</option>
+        <select id="price-book-select" class="w-full bg-[#2a2a4a] border border-[#3a3a5a] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#f4a261]">
+            <option value="">Selecciona un libro para comparar precios...</option>
         </select>
     </div>
 
