@@ -1061,3 +1061,207 @@ textarea {
     padding: 14px;
   }
 }
+
+/* Reseñas*/
+
+.page-main{
+background:var(--bg-page);
+min-height:100vh;
+padding:30px;
+}
+.titulo h1{
+font-family:'Playfair Display', serif;
+font-size:28px;
+color:var(--ink);
+margin-bottom:5px;
+}
+
+.titulo span{
+color:var(--gold);
+}
+
+.titulo p{
+color:var(--ink-faint);
+margin-bottom:25px;
+}
+
+/* GRID */
+
+.resenias-grid{
+display:grid;
+grid-template-columns:380px 1fr;
+gap:25px;
+}
+
+
+/* PANEL */
+
+.panel{
+background:var(--bg-surface);
+border:1px solid var(--line);
+border-radius:var(--radius-lg);
+padding:25px;
+box-shadow:var(--shadow-sm);
+}
+
+.panel h2{
+font-family:'Playfair Display', serif;
+color:var(--ink);
+margin-bottom:20px;
+}
+
+
+/* FORM */
+
+.form-group{
+margin-bottom:18px;
+}
+
+.form-group label{
+display:block;
+margin-bottom:6px;
+color:var(--ink-soft);
+font-weight:600;
+}
+
+
+select,
+textarea{
+
+width:100%;
+background:var(--bg-muted);
+border:1px solid var(--line);
+color:var(--ink);
+padding:12px;
+border-radius:var(--radius-sm);
+transition:var(--tr);
+
+}
+
+select:focus,
+textarea:focus{
+
+outline:none;
+border-color:var(--gold);
+box-shadow:0 0 0 3px var(--gold-muted);
+
+}
+
+
+
+/* BOTON */
+
+button[type="submit"]{
+
+background:var(--gold);
+color:white;
+border:none;
+padding:14px;
+border-radius:var(--radius-sm);
+font-weight:600;
+cursor:pointer;
+transition:var(--tr);
+
+}
+
+button[type="submit"]:hover{
+
+background:var(--gold-light);
+transform:translateY(-1px);
+
+}
+
+
+/* ESTRELLAS */
+
+#stars-input{
+display:flex;
+gap:8px;
+}
+
+.star-btn{
+
+background:none;
+border:none;
+font-size:24px;
+color:var(--line);
+cursor:pointer;
+transition:var(--tr);
+
+}
+
+.star-btn:hover{
+
+color:var(--gold-light);
+transform:scale(1.1);
+
+}
+
+.star-btn.active{
+
+color:var(--gold);
+
+}
+
+
+
+/* RESEÑAS */
+
+.review-card{
+
+background:var(--bg-warm);
+border:1px solid var(--line-soft);
+padding:18px;
+border-radius:var(--radius);
+margin-bottom:15px;
+box-shadow:var(--shadow-xs);
+transition:var(--tr);
+
+}
+
+.review-card:hover{
+
+border-color:var(--gold-pale);
+box-shadow:var(--shadow-sm);
+
+}
+
+
+.review-header{
+
+display:flex;
+justify-content:space-between;
+margin-bottom:8px;
+font-weight:600;
+color:var(--ink);
+
+}
+
+
+.review-card p{
+
+color:var(--ink-soft);
+margin-top:10px;
+
+}
+
+
+/* SCROLL */
+
+section .panel{
+
+max-height:650px;
+overflow-y:auto;
+
+}
+
+
+/* RESPONSIVE */
+
+@media(max-width:900px){
+
+.resenias-grid{
+grid-template-columns:1fr;
+}
+
+}
