@@ -14,7 +14,7 @@ $paginaActual = basename($_SERVER['PHP_SELF']);
 
 <link rel="stylesheet" href="styles.css">
 
-<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
 <script src="js/func.js" defer></script>
 <script src="js/events.js" defer></script>
