@@ -16,8 +16,8 @@ $paginaActual = basename($_SERVER['PHP_SELF']);
 
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
-<script src="js/func.js" defer></script>
-<script src="js/events.js" defer></script>
+<script src="func.js" defer></script>
+<script src="events.js" defer></script>
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>

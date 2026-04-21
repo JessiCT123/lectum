@@ -1,27 +1,27 @@
 function abrirUI(html) {
-    const modal   = document.getElementById('ui-modal');
-    const content = document.getElementById('ui-content');
+  const modal = document.getElementById('ui-modal');
+  const content = document.getElementById('ui-content');
 
-    content.innerHTML = html;
-    modal.classList.remove('hidden');
-    modal.classList.add('flex');
+  content.innerHTML = html;
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
 
-    // Pequeño delay para la animación de entrada
-    setTimeout(() => {
-        content.classList.remove('scale-95', 'opacity-0');
-        content.classList.add('scale-100', 'opacity-100');
-    }, 10);
+  // Pequeño delay para la animación de entrada
+  setTimeout(() => {
+    content.classList.remove('scale-95', 'opacity-0');
+    content.classList.add('scale-100', 'opacity-100');
+  }, 10);
 }
 
 function cerrarUI() {
-    const modal   = document.getElementById('ui-modal');
-    const content = document.getElementById('ui-content');
+  const modal = document.getElementById('ui-modal');
+  const content = document.getElementById('ui-content');
 
-    content.classList.add('scale-95', 'opacity-0');
-    setTimeout(() => {
-        modal.classList.add('hidden');
-        modal.classList.remove('flex');
-    }, 200);
+  content.classList.add('scale-95', 'opacity-0');
+  setTimeout(() => {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }, 200);
 }
 
 
@@ -104,8 +104,8 @@ function renderizarDestacados() {
 function renderizarExplorar() {
   const libros = window.LIBROS || [];
 
-  const genero    = document.getElementById("filter-genero").value;
-  const autor     = document.getElementById("filter-autor").value.toLowerCase();
+  const genero = document.getElementById("filter-genero").value;
+  const autor = document.getElementById("filter-autor").value.toLowerCase();
   const valoracion = document.getElementById("filter-valoracion").value;
 
   let filtrados = libros;
@@ -161,57 +161,58 @@ function renderizarResenias() {
 //colección
 
 function renderColeccion() {
-    const grid = document.getElementById('grid-coleccion');
-    const msg = document.getElementById('msg-vacio');
-    const txt = document.getElementById('txt-vacio');
+  const grid = document.getElementById('grid-coleccion');
+  const msg = document.getElementById('msg-vacio');
+  const txt = document.getElementById('txt-vacio');
 
-    if (!window.SESION_ACTIVA) {
-        grid.innerHTML = '';
-        msg.classList.remove('hidden');
-        txt.innerText = "Inicia sesión para gestionar tu biblioteca personal.";
-        return;
-    }
-
-    if (window.USER_COL.length === 0) {
-        grid.innerHTML = '';
-        msg.classList.remove('hidden');
-        txt.innerText = "Tu colección está vacía. ¡Añade tu primer libro!";
-        return;
-    }
-
-    filtrarColeccion('all');
-    function filtrarColeccion(filtro, btn = null) {
-    const grid = document.getElementById('grid-coleccion');
-    const msg = document.getElementById('msg-vacio');
-    
-    if (btn) {
-        document.querySelectorAll('.status-filter-btn').forEach(b => {
-            b.classList.remove('bg-[#f4a261]');
-            b.classList.add('bg-[#2a2a4a]'); 
-        });
-        btn.classList.add('bg-[#f4a261]');
-        btn.classList.remove('bg-[#2a2a4a]');
-    }
-
-    // Unir info base con estado del usuario
-    let items = window.USER_COL.map(c => {
-        let libro = window.DB_LIBROS.find(l => l.id == c.libro_id);
-        return { ...libro, estado_usuario: c.estado };
-    });
-
-    if (filtro !== 'all') {
-        items = items.filter(i => i.estado_usuario === filtro);
-    }
-
+  if (!window.SESION_ACTIVA) {
     grid.innerHTML = '';
-    
-    if (items.length === 0) {
-        msg.classList.remove('hidden');
-        document.getElementById('txt-vacio').innerText = "No hay libros en esta categoría.";
-    } else {
-        msg.classList.add('hidden');
-        items.forEach(libro => {
-            grid.innerHTML += `
+    msg.classList.remove('hidden');
+    txt.innerText = "Inicia sesión para gestionar tu biblioteca personal.";
+    return;
+  }
+
+  if (window.USER_COL.length === 0) {
+    grid.innerHTML = '';
+    msg.classList.remove('hidden');
+    txt.innerText = "Tu colección está vacía. ¡Añade tu primer libro!";
+    return;
+  }
+
+  filtrarColeccion('all');
+}
+function filtrarColeccion(filtro, btn) {
+  const grid = document.getElementById('grid-coleccion');
+  const msg = document.getElementById('msg-vacio');
+
+  if (btn) {
+    document.querySelectorAll('.status-filter-btn').forEach(b => {
+      b.classList.remove('bg-[#f4a261]');
+      b.classList.add('bg-[#2a2a4a]');
+    });
+    btn.classList.add('bg-[#f4a261]');
+    btn.classList.remove('bg-[#2a2a4a]');
+  }
+
+  // Unir info base con estado del usuario
+  let items = window.USER_COL.map(c => {
+    let libro = window.DB_LIBROS.find(l => l.id == c.libro_id);
+    return { ...libro, estado_usuario: c.estado };
+  });
+
+  if (filtro !== 'all') {
+    items = items.filter(i => i.estado_usuario === filtro);
+  }
+
+  grid.innerHTML = '';
+
+  if (items.length === 0) {
+    msg.classList.remove('hidden');
+    document.getElementById('txt-vacio').innerText = "No hay libros en esta categoría.";
+  } else {
+    msg.classList.add('hidden');
+    items.forEach(libro => {
+      grid.innerHTML += `
                 <div class="book-card cursor-pointer group" onclick='verLibro(${JSON.stringify(libro)})'>
                     <div class="aspect-[3/4] overflow-hidden rounded shadow-sm relative">
                         <img src="img/${libro.portada}" onerror="this.src='img/default.jpg'" class="w-full h-full object-cover">
@@ -227,35 +228,118 @@ function renderColeccion() {
                     </div>
                 </div>
             `;
-        });
-    }
+    });
+  }
 }
 
+
+// comparar Precios 
+function mostrarPreciosLibro(idLibro) {
+  const contenedor = document.getElementById('store-prices');
+  const infoLibro = document.getElementById('selected-book-info');
+
+  // buscamos el libro y sus precios 
+  const libro = (window.LIBROS || []).find(l => l.id == idLibro);
+  const precios = (window.PRECIOS || []).filter(p => p.libro_id == idLibro);
+
+  if (!libro) return;
+
+  //Buscamos el precio más bajo de todas las tiendas 
+  let listaPrecios = []; // creamos el array para los precios 
+  for (var i = 0; i < precios.length; i++) {
+    let precio = parseFloat(precios[i].precio);
+    listaPrecios.push(precio);
+  }
+
+  let precioMinimo = listaPrecios[0];
+  for (let i = 0; i < listaPrecios.length; i++) {
+    if (listaPrecios[i] < precioMinimo) {
+      precioMinimo = listaPrecios[i];
+    }
+  }
+  document.getElementById('price-empty').classList.add('hidden');
+  document.getElementById('price-comparison').classList.remove('hidden');
+
+  let imagen = '<img src="img/' + libro.portada + '" onerror="this.src=\'img/default.jpg\'" class="w-16 h-auto object-cover rounded shadow">';
+  let titulo = '<h3 class="font-bold text-[#f4a261]">' + libro.titulo + '</h3>';
+  let autor = '<p class="text-sm text-[#a8a5a0]">' + libro.autor + '</p>';
+  infoLibro.innerHTML = '<div class="flex items-center gap-4">' + imagen + '<div>' + titulo + autor + '</div></div>';
+
+  // Pintamos una tarjeta por cada tienda
+  contenedor.innerHTML = '';
+  for (let i = 0; i < precios.length; i++) {
+    let p = precios[i];
+    let esMasBarato = parseFloat(p.precio) === precioMinimo;
+
+    let div = document.createElement('div');
+    div.className = 'bg-white p-5 rounded-xl border-2 flex justify-between items-center relative shadow-sm transition-all hover:shadow-md ' + (esMasBarato ? 'border-emerald-500' : 'border-gray-100');
+
+    let badgeMejorPrecio = '';
+    if (esMasBarato) {
+      badgeMejorPrecio = '<span class="absolute -top-3 left-4 bg-emerald-500 text-[10px] font-bold px-2 py-1 rounded-full text-white shadow-lg">MEJOR PRECIO</span>';
+    }
+
+    let iconoTienda = '<img src="imagIconos/' + p.tienda_icono + '" class="w-10 h-10 object-contain" onerror="this.style.display=\'none\'">';
+    let nombreTienda = '<p class="font-bold text-gray-700 leading-none">' + p.tienda_nombre + '</p>';
+    let estrellas = '<div class="text-yellow-500 text-xs mt-1">' + '★'.repeat(p.estrellas) + '☆'.repeat(5 - p.estrellas) + '</div>';
+    let envio = '<p class="text-[11px] text-gray-500 italic mt-1"><i class="fas fa-truck mr-1"></i>' + (p.envio || 'Consultar envío') + '</p>';
+    let colorPrecio = esMasBarato ? 'text-emerald-500' : 'text-[#f4a261]';
+    let precio = '<p class="text-2xl font-black ' + colorPrecio + '">' + p.precio + '€</p>';
+    let boton = '<a href="' + p.url + '" target="_blank" class="bg-[#f4a261] text-white px-5 py-2.5 rounded-lg text-xs font-bold hover:bg-[#e76f51] transition-all shadow-md inline-block">IR A TIENDA</a>';
+
+    div.innerHTML = badgeMejorPrecio +
+      '<div class="flex flex-col gap-1"><div class="flex items-center gap-2">' + iconoTienda + '<div>' + nombreTienda + estrellas + '</div></div>' + envio + '</div>' +
+      '<div class="flex flex-col items-center">' + precio + '</div>' +
+      '<div>' + boton + '</div>';
+
+    contenedor.appendChild(div);
+  }
 }
 
 // nav
 function verAutor(nombre) {
-    window.location.href = `explorar.php?autor=${encodeURIComponent(nombre)}`;
+  window.location.href = `explorar.php?autor=${encodeURIComponent(nombre)}`;
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Renderizar secciones principales
-    renderizarDestacados();
-    renderizarResenias();
-    renderizarExplorar();
+  // Renderizar secciones principales ,comprobamos si estamos en Index o fuera 
 
-    // Si se llega desde verAutor(), activar filtro automáticamente
-    const params    = new URLSearchParams(window.location.search);
-    const autorUrl  = params.get('autor');
-
-    if (autorUrl) {
-        const seccionExplorar = document.getElementById('tab-explore');
-        if (seccionExplorar) seccionExplorar.classList.remove('hidden');
-
-        const buscador = document.getElementById('filter-autor');
-        if (buscador) {
-            buscador.value = autorUrl;
-            renderizarExplorar(); // volver a filtrar  con el autor de la URL
-        }
+  if (document.getElementById('most-read-books')) {
+        renderizarDestacados();
     }
+
+    if (document.getElementById('reviews-list')) {
+        renderizarResenias();
+    }
+
+    if (document.getElementById('explore-results')) {
+      aplicarFiltros();
+    }
+
+
+    
+
+  // Si se llega desde verAutor(), activar filtro automáticamente
+  const params = new URLSearchParams(window.location.search);
+  const autorUrl = params.get('autor');
+
+  if (autorUrl) {
+    const seccionExplorar = document.getElementById('tab-explore');
+    if (seccionExplorar) seccionExplorar.classList.remove('hidden');
+
+    const buscador = document.getElementById('filter-autor');
+    if (buscador) {
+      buscador.value = autorUrl;
+      aplicarFiltros();
+    }
+  }
+
+  let selectPrecios = document.getElementById('price-book-select');
+  if (selectPrecios) {
+    selectPrecios.addEventListener('change', function () {
+      if (this.value != '') {
+        mostrarPreciosLibro(this.value);
+      }
+    });
+  }
 });

@@ -32,6 +32,7 @@ $generos = $conn->query("SELECT * FROM generos ORDER BY nombre")->fetchAll();
 
             <!-- Filtro por género -->
             <select id="filter-genero" class="bg-[#2a2a4a] border border-[#3a3a5a] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#f4a261]">
+                <option value="">Todos los géneros</option>
                 <?php
                 //obtenemos los géneros de la BBDD
                 $queryGen = $conn->query("SELECT * FROM generos");
@@ -44,8 +45,8 @@ $generos = $conn->query("SELECT * FROM generos ORDER BY nombre")->fetchAll();
             <!-- Filtro por valoración -->
             <select id="filter-valoracion" class="bg-[#2a2a4a] border border-[#3a3a5a] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#f4a261]">
                 <option value="">Todas las reseñas</option>
-                <option value="positivas">Reseñas positivas (4-5)</option>
-                <option value="negativas">Reseñas negativas (1-2)</option>
+                <option value="positive">Reseñas positivas (4-5)</option>
+                <option value="negative">Reseñas negativas (1-2)</option>
             </select>
 
             <!-- Filtro por autor -->
@@ -74,7 +75,7 @@ $generos = $conn->query("SELECT * FROM generos ORDER BY nombre")->fetchAll();
             let libros = window.LIBROS ?? [];
 
             if (autor) {
-                libros = libros.filter(l => l.autor.toLowerCase().includes(autor));
+                libros = libros.filter(l => l.autor.toLowerCase().includes(autor) || l.titulo.toLowerCase().includes(autor));
             }
             if (genero) {
                 libros = libros.filter(l => l.genero_nombre.toLowerCase().includes(genero));
@@ -86,7 +87,7 @@ $generos = $conn->query("SELECT * FROM generos ORDER BY nombre")->fetchAll();
             }
 
             const grid = document.getElementById('explore-results');
-            grid.innerHTML= '';
+            grid.innerHTML = '';
             // Sin resultados
             if (libros.length == 0) {
                 grid.innerHTML = '<p class="col-span-full text-center text-[#a8a5a0] py-10">No se encontraron libros.</p>';
@@ -102,10 +103,10 @@ $generos = $conn->query("SELECT * FROM generos ORDER BY nombre")->fetchAll();
                 if (window.SESION_ACTIVA == true) {
                     botonColeccion =
                         '<select class="mt-2 w-full bg-[#2a2a4a] border border-[#3a3a5a] rounded-lg px-2 py-1 text-xs text-[#a8a5a0]" onchange="agregarLibro(' + libro.id + ', this.value)">' +
-                            '<option value="">+ Añadir a colección</option>' +
-                            '<option value="leyendo">Leyendo</option>' +
-                            '<option value="terminado">Terminado</option>' +
-                            '<option value="pendiente">Pendiente</option>' +
+                        '<option value="">+ Añadir a colección</option>' +
+                        '<option value="leyendo">Leyendo</option>' +
+                        '<option value="terminado">Terminado</option>' +
+                        '<option value="pendiente">Pendiente</option>' +
                         '</select>' +
                         '<p id="msg-' + libro.id + '" class="text-[10px] text-[#2a9d8f] mt-1 hidden">Guardado</p>';
                 } else {
@@ -114,19 +115,19 @@ $generos = $conn->query("SELECT * FROM generos ORDER BY nombre")->fetchAll();
 
                 grid.innerHTML +=
                     '<div class="book-card group cursor-pointer">' +
-                        '<div class="aspect-[3/4] overflow-hidden relative rounded-lg" onclick=\'verLibro(' + JSON.stringify(libro) + ')\'>' +
-                            '<img src="img/' + libro.portada + '" onerror="this.src=\'img/default.jpg\'" class="w-full h-full object-cover transition-transform group-hover:scale-105">' +
-                            '<span class="absolute top-2 left-2 bg-black/70 backdrop-blur-sm text-white text-[10px] px-2 py-1 rounded">' + libro.genero_nombre + '</span>' +
-                        '</div>' +
-                        '<div class="p-3">' +
-                            '<h4 class="font-display text-sm font-semibold text-white group-hover:text-[#f4a261] transition-colors">' + libro.titulo + '</h4>' +
-                            '<p class="text-xs mt-1 text-gray-400">' + libro.autor + '</p>' +
-                            '<div class="flex justify-between text-xs mt-2 text-gray-500">' +
-                                '<span><i class="fas fa-star text-yellow-500"></i> ' + libro.valoracion + '</span>' +
-                                '<span>' + libro.anio + '</span>' +
-                            '</div>' +
-                            botonColeccion +
-                        '</div>' +
+                    '<div class="aspect-[3/4] overflow-hidden relative rounded-lg" onclick=\'verLibro(' + JSON.stringify(libro) + ')\'>' +
+                    '<img src="img/' + libro.portada + '" onerror="this.src=\'img/default.jpg\'" class="w-full h-full object-cover transition-transform group-hover:scale-105">' +
+                    '<span class="absolute top-2 left-2 bg-black/70 backdrop-blur-sm text-white text-[10px] px-2 py-1 rounded">' + libro.genero_nombre + '</span>' +
+                    '</div>' +
+                    '<div class="p-3">' +
+                    '<h4 class="font-display text-sm font-semibold text-white group-hover:text-[#f4a261] transition-colors">' + libro.titulo + '</h4>' +
+                    '<p class="text-xs mt-1 text-gray-400">' + libro.autor + '</p>' +
+                    '<div class="flex justify-between text-xs mt-2 text-gray-500">' +
+                    '<span><i class="fas fa-star text-yellow-500"></i> ' + libro.valoracion + '</span>' +
+                    '<span>' + libro.anio + '</span>' +
+                    '</div>' +
+                    botonColeccion +
+                    '</div>' +
                     '</div>';
             }
         }
@@ -142,29 +143,41 @@ $generos = $conn->query("SELECT * FROM generos ORDER BY nombre")->fetchAll();
             datos.append('estado', estado);
 
             fetch('backend/guardar_estado.php', {
-                method: 'POST',
-                body: datos
-            })
-            .then(function(respuesta) {
-                return respuesta.json();
-            })
-            .then(function(resultado) {
-                if (resultado.success == true) {
-                    var msg = document.getElementById('msg-' + libro_id);
-                    msg.classList.remove('hidden');
-                    setTimeout(function() {
-                        msg.classList.add('hidden');
-                    }, 2000);
-                } else {
-                    alert('Error al guardar. Inicia sesión primero.');
-                }
-            });
+                    method: 'POST',
+                    body: datos
+                })
+                .then(function(respuesta) {
+                    return respuesta.json();
+                })
+                .then(function(resultado) {
+                    if (resultado.success == true) {
+                        var msg = document.getElementById('msg-' + libro_id);
+                        msg.innerText = 'Libro guardado correctamente';
+                        msg.style.color = '#2a9d8f';
+                        msg.classList.remove('hidden');
+                        setTimeout(function() {
+                            msg.classList.add('hidden');
+                        }, 2000);
+                    } else {
+                        var msg = document.getElementById('msg-' + libro_id);
+                        msg.innerText = 'Inicia sesión primero';
+                        msg.style.color = '#f5481d';
+                        msg.classList.remove('hidden');
+                    }
+                });
         }
 
         // Escuchar cambios en los filtros
         document.getElementById('filter-autor').addEventListener('input', aplicarFiltros);
         document.getElementById('filter-genero').addEventListener('change', aplicarFiltros);
         document.getElementById('filter-valoracion').addEventListener('change', aplicarFiltros);
+
+        //Mostar libro desde el buscador 
+        var params = new URLSearchParams(window.location.search);
+        var buscarUrl = params.get('buscar');
+        if (buscarUrl) {
+            document.getElementById('filter-autor').value = buscarUrl;
+        }
 
         // Cargar todos los libros al entrar
         aplicarFiltros();

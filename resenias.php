@@ -6,7 +6,7 @@ include 'header.php';
 if ($_POST) {
 
     $libro_id   = $_POST['libro_id'];
-    $usuario_id = $_SESSION['user_id'];
+    $usuario_id = $_SESSION['id'];
     $valoracion = $_POST['valoracion'];
     $texto      = $_POST['texto'];
 
@@ -84,28 +84,25 @@ $reseñas = $sql->fetchAll(PDO::FETCH_ASSOC);
 </div>
 
 <div class="resenias-grid">
+    
+<?php if (isset($_SESSION['id'])): ?>
 
 <aside>
-
 <div class="panel">
 <h2>Escribe tu reseña</h2>
 
 <form id="review-form" method="POST" action="resenias.php">
-
-<input type="hidden" name="libro_id" id="libro_id">
-<input type="hidden" name="valoracion" id="valoracion">
+<input type="hidden" name="valoracion" id="valoracion" value="0">
 
 <div class="form-group">
 <label>Libro</label>
 <select id="sel-libro" name="libro_id">
 <option value="">Selecciona un libro...</option>
-
 <?php foreach ($libros as $l): ?>
 <option value="<?= $l['id'] ?>">
 <?= htmlspecialchars($l['titulo']) ?> — <?= htmlspecialchars($l['autor']) ?>
 </option>
 <?php endforeach; ?>
-
 </select>
 </div>
 
@@ -126,11 +123,21 @@ $reseñas = $sql->fetchAll(PDO::FETCH_ASSOC);
 </div>
 
 <button type="submit" name="nuevo">Publicar Reseña</button>
-
 </form>
 </div>
-
 </aside>
+
+<?php else: ?>
+
+<aside>
+<div class="panel">
+<h2>Escribe tu reseña</h2>
+<p style="color:var(--ink-soft); margin-bottom:15px;">Inicia sesión para poder escribir una reseña.</p>
+<a href="backend/sesion.php" style="display:block; text-align:center; background:var(--gold); color:white; padding:12px; border-radius:var(--radius-sm); font-weight:600;">Iniciar sesión</a>
+</div>
+</aside>
+
+<?php endif; ?>
 
 <section>
 
@@ -176,7 +183,7 @@ let valoracion = 0;
 
 document.querySelectorAll(".star-btn").forEach(btn => {
 btn.addEventListener("click", () => {
-valoracion = btn.dataset.val;
+valoracion = parseInt(btn.dataset.val);
 
 document.querySelectorAll(".star-btn").forEach((b, i) => {
 b.classList.toggle("active", i < valoracion);
