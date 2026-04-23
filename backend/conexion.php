@@ -1,5 +1,5 @@
 <?php 
-$host = 'localhost'; 
+$host = 'db'; 
 $dbname = 'bd_lectum'; 
 $username = 'root'; 
 $password = ''; 

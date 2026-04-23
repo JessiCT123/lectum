@@ -260,7 +260,7 @@ function mostrarPreciosLibro(idLibro) {
   document.getElementById('price-empty').classList.add('hidden');
   document.getElementById('price-comparison').classList.remove('hidden');
 
-  let imagen = '<img src="../img/' + libro.portada + '" onerror="this.src=\'../img/default.jpg\'" class="w-16 h-auto object-cover rounded shadow">';
+  let imagen = '<img src="' + window.BASE_URL + '/img/' + libro.portada + '" onerror="this.src=\'' + window.BASE_URL + '/img/default.jpg\'" class="w-16 h-auto object-cover rounded shadow">';
   let titulo = '<h3 class="font-bold text-[#f4a261]">' + libro.titulo + '</h3>';
   let autor = '<p class="text-sm text-[#a8a5a0]">' + libro.autor + '</p>';
   infoLibro.innerHTML = '<div class="flex items-center gap-4">' + imagen + '<div>' + titulo + autor + '</div></div>';
@@ -279,7 +279,7 @@ function mostrarPreciosLibro(idLibro) {
       badgeMejorPrecio = '<span class="absolute -top-3 left-4 bg-emerald-500 text-[10px] font-bold px-2 py-1 rounded-full text-white shadow-lg">MEJOR PRECIO</span>';
     }
 
-    let iconoTienda = '<img src="../imagIconos/' + p.tienda_icono + '" class="w-10 h-10 object-contain" onerror="this.style.display=\'none\'">';
+    let iconoTienda = '<img src="' + window.BASE_URL + '/imagIconos/' + p.tienda_icono + '" class="w-10 h-10 object-contain" onerror="this.style.display=\'none\'">';
     let nombreTienda = '<p class="font-bold text-gray-700 leading-none">' + p.tienda_nombre + '</p>';
     let estrellas = '<div class="text-yellow-500 text-xs mt-1">' + '★'.repeat(p.estrellas) + '☆'.repeat(5 - p.estrellas) + '</div>';
     let envio = '<p class="text-[11px] text-gray-500 italic mt-1"><i class="fas fa-truck mr-1"></i>' + (p.envio || 'Consultar envío') + '</p>';
@@ -298,7 +298,7 @@ function mostrarPreciosLibro(idLibro) {
 
 // nav
 function verAutor(nombre) {
-  window.location.href = `/nav/explorar.php?autor=${encodeURIComponent(nombre)}`;
+window.location.href = window.BASE_URL + '/nav/explorar.php?autor=' + encodeURIComponent(nombre);
 }
 
 document.addEventListener('DOMContentLoaded', () => {

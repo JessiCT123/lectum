@@ -19,6 +19,7 @@ $paginaActual = basename($_SERVER['PHP_SELF']);
   
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
+  <script>window.BASE_URL = '<?= BASE_URL ?>';</script>
   <script src="<?= BASE_URL ?>/js/func.js" defer></script>
   <script src="<?= BASE_URL ?>/js/events.js" defer></script>
 
@@ -78,7 +79,7 @@ $paginaActual = basename($_SERVER['PHP_SELF']);
           <!-- añadimos rutas absolutas / para evitar fallos -->
 
 
-          <a href="/index.php"
+          <a href="<?= BASE_URL ?>/index.php"
             class="nav-tab px-4 py-3 text-sm font-medium <?= $paginaActual === 'index.php' ? 'tab-active' : '' ?>">
             Inicio
           </a>

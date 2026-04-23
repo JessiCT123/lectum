@@ -187,7 +187,7 @@ if ($userId) {
         let portada;
 
         if (libro.portada != null && libro.portada != '') {
-            portada = '<img src="/img/' + libro.portada + '" alt="' + libro.titulo + '" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">';
+            portada = '<img src="' + window.BASE_URL + '/img/' + libro.portada + '" alt="' + libro.titulo + '" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">';
         } else {
             portada = '<i class="fa-solid fa-book text-4xl text-[#a8a5a0]"></i>';
         }
@@ -213,5 +213,6 @@ if ($userId) {
             '</div>';
     }
 </script>
+<script>window.BASE_URL = '<?= BASE_URL ?>';</script>
 
 <?php include __DIR__ . '/../footer.php'; ?>

@@ -27,7 +27,7 @@ if ($_POST) {
             $sql->bindParam(":texto", $texto);
             $sql->execute();
 
-            header("Location: resenias.php");
+            header("Location: " . BASE_URL . "/nav/resenias.php");
             exit();
         }
 
@@ -72,7 +72,7 @@ $reseñas = $sql->fetchAll(PDO::FETCH_ASSOC);
 <head>
 <meta charset="UTF-8">
 <title>Reseñas</title>
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="<?= BASE_URL ?>/css/styles.css">
 </head>
 
 <body>
@@ -134,7 +134,7 @@ $reseñas = $sql->fetchAll(PDO::FETCH_ASSOC);
 <div class="panel">
 <h2>Escribe tu reseña</h2>
 <p style="color:var(--ink-soft); margin-bottom:15px;">Inicia sesión para poder escribir una reseña.</p>
-<a href="backend/sesion.php" style="display:block; text-align:center; background:var(--gold); color:white; padding:12px; border-radius:var(--radius-sm); font-weight:600;">Iniciar sesión</a>
+<a href="<?= BASE_URL ?>backend/sesion.php" style="display:block; text-align:center; background:var(--gold); color:white; padding:12px; border-radius:var(--radius-sm); font-weight:600;">Iniciar sesión</a>
 </div>
 </aside>
 

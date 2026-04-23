@@ -1,9 +1,11 @@
 <?php
 session_start();
+require_once __DIR__ . '/config/config.php';
+
 include 'backend/conexion.php';
 include 'backend/auth.php';
 include 'header.php';
-require_once __DIR__ . '/config/config.php';
+
 
 // ── Cargar datos  ──
 $libros = $conn->query("SELECT l.*, g.nombre AS genero_nombre FROM libros l JOIN generos g ON l.genero_id = g.id ORDER BY l.id")->fetchAll();
@@ -196,7 +198,7 @@ if (isset($_SESSION['id'])) {
         <div id="msg-${libro.id}" class="hidden text-xs mt-2 text-center text-white">
 </div>
 
-            <a href="nav/compararPrecios.php?id=${libro.id}" class="flex items-center justify-center gap-2 w-full bg-[#16213e] hover:bg-[#f4a261] text-[#f4a261] hover:text-[#0f0f1a] py-3 rounded-xl border border-[#f4a261]/50 font-bold text-xs transition-all uppercase tracking-widest">
+            <a href="${window.BASE_URL}/nav/compararPrecios.php?id=${libro.id}" class="flex items-center justify-center gap-2 w-full bg-[#16213e] hover:bg-[#f4a261] text-[#f4a261] hover:text-[#0f0f1a] py-3 rounded-xl border border-[#f4a261]/50 font-bold text-xs transition-all uppercase tracking-widest">
                 <i class="fas fa-tag text-[10px]"></i> VER PRECIOS
             </a>
         </div>
@@ -234,5 +236,8 @@ if (isset($_SESSION['id'])) {
             });
         }
 
+</script>
+<script>
+  window.BASE_URL = '<?= BASE_URL ?>';
 </script>
 <?php include 'footer.php'; ?>

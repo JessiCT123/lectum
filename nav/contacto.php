@@ -9,7 +9,7 @@ require_once __DIR__ . '/../config/config.php';?>
     <div class="contacto-contenedor">
         <div class=" imgContacto">
 
-            <img src="/img/logo.png" alt="imgContacto" class="imgContacto">
+            <img src="<?= BASE_URL ?>/img/logo.png" alt="imgContacto" class="imgContacto">
             <pre>
         <u><b>Horario de atención al público:</b></u>
         Lunes a Viernes:    09:30 a 20:30

@@ -45,12 +45,12 @@ try {
                 exit();
             }
 
-            if (!isset($_POST['regTerms'])) {
+           /* if (!isset($_POST['regTerms'])) {
                 $_SESSION['error_message'] = 'Debes aceptar los términos y condiciones.';
             header("Location: " . BASE_URL . "/backend/registros.php");
                 exit();
             }
-
+                */
             /*Realizamos la consulta en la tabla de usuarios para ver si ya existe un usuario o email igual*/
             $consulta = "SELECT * FROM usuarios WHERE usuario = :usuario OR email = :email";
             $sql = $conn->prepare($consulta);

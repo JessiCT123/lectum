@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (e.key === 'Enter') {
         var texto = this.value.trim();
         if (texto.length > 0) {
-          window.location.href = '/lectum/nav/explorar.php?buscar=' + encodeURIComponent(texto);
+          window.location.href = window.BASE_URL + '/nav/explorar.php?buscar=' + encodeURIComponent(texto);
         }
       }
     });

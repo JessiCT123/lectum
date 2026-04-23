@@ -1,7 +1,6 @@
 <!-- EXPLORAR -->
-
 <?php
-session_start();
+
 include __DIR__ . '/../backend/conexion.php';
 include __DIR__ . '/../header.php';
 require_once __DIR__ . '/../config/config.php';
@@ -58,7 +57,10 @@ $generos = $conn->query("SELECT * FROM generos ORDER BY nombre")->fetchAll();
 
     <!-- Resultados -->
     <div id="explore-results" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4"></div>
-    <script>
+  
+    <script>window.BASE_URL = '<?= BASE_URL ?>';</script>
+
+   <script>
         // sin sesión
         window.LIBROS = <?= json_encode($libros) ?>;
 
@@ -116,7 +118,7 @@ $generos = $conn->query("SELECT * FROM generos ORDER BY nombre")->fetchAll();
                 grid.innerHTML +=
                     '<div class="book-card group cursor-pointer">' +
                     '<div class="aspect-[3/4] overflow-hidden relative rounded-lg" onclick=\'verLibro(' + JSON.stringify(libro) + ')\'>' +
-                    '<img src="/img/' + libro.portada + '" onerror="this.src=\'/img/default.jpg\'" class="w-full h-full object-cover transition-transform group-hover:scale-105">' +
+                    '<img src="' + window.BASE_URL + '/img/' + libro.portada + '" onerror="this.src=\'' + window.BASE_URL + '/img/default.jpg\'" class="w-full h-full object-cover transition-transform group-hover:scale-105">' +
                     '<span class="absolute top-2 left-2 bg-black/70 backdrop-blur-sm text-white text-[10px] px-2 py-1 rounded">' + libro.genero_nombre + '</span>' +
                     '</div>' +
                     '<div class="p-3">' +
@@ -142,7 +144,7 @@ $generos = $conn->query("SELECT * FROM generos ORDER BY nombre")->fetchAll();
             datos.append('libro_id', libro_id);
             datos.append('estado', estado);
 
-            fetch('/backend/guardar_estado.php', {
+            fetch(window.BASE_URL + '/backend/guardar_estado.php', {
                     method: 'POST',
                     body: datos
                 })
@@ -185,5 +187,6 @@ $generos = $conn->query("SELECT * FROM generos ORDER BY nombre")->fetchAll();
         // Cargar todos los libros al entrar
         aplicarFiltros();
     </script>
+    <script>window.BASE_URL = '<?= BASE_URL ?>';</script>
 </section>
 <?php include __DIR__ . '/../footer.php';?>

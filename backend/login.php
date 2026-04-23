@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once __DIR__ . '/../config/config.php';
 include 'conexion.php'; // tu conexión a la BD
 
 try {
