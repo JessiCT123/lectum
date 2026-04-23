@@ -1,10 +1,11 @@
 <?php
 
 session_start();
+require_once __DIR__ . '/../config/config.php';
 
 // comprobamos si el usuario ha iniciado sesión, si no, lo mandamos al login
 if (!isset($_SESSION['usuario'])) {
-    header("Location: sesion.php");
+    header("Location: " . BASE_URL . "/backend/sesion.php");
     exit();
 }
 ?>
@@ -16,7 +17,7 @@ if (!isset($_SESSION['usuario'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>/css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 </head>
 
@@ -115,7 +116,7 @@ if (!isset($_SESSION['usuario'])) {
         <br>
 
         <!-- volver al index -->
-        <a href="/index.php">
+        <a href="<?= BASE_URL ?>/index.php">
             <button class="submit-btn">Volver</button>
         </a>
 

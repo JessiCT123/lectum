@@ -1,6 +1,8 @@
 <?php
 session_start();
 include 'conexion.php';
+require_once __DIR__ . '/../config/config.php';
+
 
 /*Borrar token de BD si existe cookie */
 if (isset($_COOKIE['remember_token'])) {
@@ -19,7 +21,8 @@ if (isset($_COOKIE['remember_token'])) {
 /*Borrar sesión */
 $_SESSION = [];
 session_destroy();
-header("Location: /index.php");
+
+header("Location: " . BASE_URL . "/index.php");
 exit();
 
 ?>

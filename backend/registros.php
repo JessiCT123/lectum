@@ -1,6 +1,8 @@
 <?php
 session_start();
 include("conexion.php");
+require_once __DIR__ . '/../config/config.php';
+
 
 try {
 
@@ -15,37 +17,37 @@ try {
 
             if (!preg_match('/[A-Z]/', $usuario)) {
                 $_SESSION['error_message'] = 'El usuario debe contener al menos una mayúscula.';
-                header("Location: registros.php");
+                header("Location: " . BASE_URL . "/backend/registros.php");
                 exit();
             }
 
             if (!preg_match('/[0-9!@#$%^&*)(-_]/', $usuario)) {
                 $_SESSION['error_message'] = 'El usuario debe contener al menos un número o símbolo (!@#$%^&*).';
-                header("Location: registros.php");
+               header("Location: " . BASE_URL . "/backend/registros.php");
                 exit();
             }
 
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 $_SESSION['error_message'] = 'El email no es válido.';
-                header("Location: registros.php");
+                header("Location: " . BASE_URL . "/backend/registros.php");
                 exit();
             }
 
             if (strlen($password) < 8) {
                 $_SESSION['error_message'] = 'La contraseña debe tener al menos 8 caracteres.';
-                header("Location: registros.php");
+               header("Location: " . BASE_URL . "/backend/registros.php");
                 exit();
             }
 
             if ($password !== $password1) {
                 $_SESSION['error_message'] = 'Las contraseñas no coinciden.';
-                header("Location: registros.php");
+                header("Location: " . BASE_URL . "/backend/registros.php");
                 exit();
             }
 
             if (!isset($_POST['regTerms'])) {
                 $_SESSION['error_message'] = 'Debes aceptar los términos y condiciones.';
-                header("Location: registros.php");
+            header("Location: " . BASE_URL . "/backend/registros.php");
                 exit();
             }
 
@@ -58,7 +60,7 @@ try {
 
             if ($sql->rowCount() > 0) {
                 $_SESSION['error_message'] = 'El usuario o email ya existen.';
-                header("Location: registros.php");
+                header("Location: " . BASE_URL . "/backend/registros.php");
                 exit();
             } else {
 
@@ -75,12 +77,12 @@ try {
                 $sql->execute();
 
                 $_SESSION['success_message'] = 'ok';
-                header("Location: registros.php");
+                header("Location: " . BASE_URL . "/backend/registros.php");
                 exit();
             }
         } else {
             $_SESSION['error_message'] = 'Debe ingresar todos los datos.';
-            header("Location: registros.php");
+            header("Location: " . BASE_URL . "/backend/registros.php");
             exit();
         }
     }
@@ -96,7 +98,7 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro</title>
-    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>/css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 
 </head>
@@ -191,7 +193,7 @@ try {
 
         <br>
 
-        <a href="/index.php"><button class="submit-btn">Volver</button></a>
+        <a href="<?= BASE_URL ?>/index.php"><button class="submit-btn">Volver</button></a>
 
     </div>
 

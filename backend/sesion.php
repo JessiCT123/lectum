@@ -1,4 +1,6 @@
-<?php session_start(); ?>
+<?php session_start();
+require_once __DIR__ . '/../config/config.php';
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -6,7 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar Sesión</title>
-    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>/css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 </head>
 
@@ -65,7 +67,7 @@
 
         <br><br>
 
-        <a href="../index.php"><button type="submit" name="volver" class="submit-btn">Volver</button></a>
+       <a href="<?= BASE_URL ?>/index.php"><button type="submit" name="volver" class="submit-btn">Volver</button></a>
 
         <script>
             function togglePw(inputId, btn) {

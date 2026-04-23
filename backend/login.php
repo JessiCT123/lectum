@@ -57,16 +57,16 @@ try {
                     ]);
             }
 
-            header("Location: /index.php");
+            header("Location: " . BASE_URL . "/index.php");
             exit();
         } else {
             $_SESSION['error_message'] = 'Usuario/email o contraseña incorrectos.';
-            header("Location: sesion.php");
+            header("Location: " . BASE_URL . "/backend/sesion.php");
             exit();
         }
     } else {
         $_SESSION['error_message'] = 'Debe ingresar todos los datos.';
-        header("Location: sesion.php");
+       header("Location: " . BASE_URL . "/backend/sesion.php");
         exit();
     }
 } catch (PDOException $e) {
