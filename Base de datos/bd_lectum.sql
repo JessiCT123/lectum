@@ -152,7 +152,8 @@ INSERT INTO precios (libro_id, tienda_id, precio, url) VALUES
 CREATE TABLE usuarios (
   id INT AUTO_INCREMENT PRIMARY KEY,
   nombre VARCHAR(50),
-  usuario VARCHAR(50),
+  usuario VARCHAR(50) UNIQUE,
+  email VARCHAR(100) UNIQUE,
   password VARCHAR(100),
   fecha_registro datetime NOT NULL DEFAULT current_timestamp()
 );
@@ -167,11 +168,6 @@ CREATE TABLE resenias (
   FOREIGN KEY (libro_id) REFERENCES libros(id),
   FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
 );
-INSERT INTO resenias (libro_id, usuario_id, valoracion, texto, fecha) VALUES
-(1, 1, 5, 'Una obra maestra absoluta. García Márquez nos transporta a un mundo mágico e inolvidable.', '2026-01-15'),
-(2, 2, 5, 'Más relevante que nunca. Una advertencia sobre los peligros del totalitarismo.', '2026-01-10'),
-(8, 3, 4, 'Perfecto para todas las edades. Me hizo enamorarme de la lectura.', '2026-01-08'),
-(9, 4, 5, 'Simple pero profundo. Cada relectura revela nuevos significados.', '2026-01-05');
 
 CREATE TABLE usuario_libros (
   id INT AUTO_INCREMENT PRIMARY KEY,
@@ -194,3 +190,4 @@ CREATE TABLE remember_tokens (
 
     FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
 );
+
