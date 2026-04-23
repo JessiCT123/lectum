@@ -12,21 +12,21 @@
 
 <body>
 
-    <div id="formLogin" style="display:block">
+    <div id="formLogin">
         <h1 class="form-heading">Bienvenido de nuevo</h1>
         <p class="form-subheading">Inicia sesión para acceder a tu biblioteca.</p>
-        <form id="loginForm" method="post" action="login.php" novalidate>
 
+        <form method="post" action="login.php">
             <div class="input-group">
-                <label for="loginUser">Usuario o Email</label>
+                <label>Usuario o Email</label>
                 <div class="input-wrap">
                     <i class="fa-solid fa-user input-icon"></i>
-                    <input type="text" id="loginUser" class="form-input" placeholder="Ingrese su usuario o email" autocomplete="username" name="usuario" />
+                    <input type="text" class="form-input" placeholder="Ingrese su usuario o email" autocomplete="username" name="usuario" />
                 </div>
             </div>
 
             <div class="input-group">
-                <label for="loginPassword">Contraseña</label>
+                <label>Contraseña</label>
                 <div class="input-wrap">
                     <i class="fa-solid fa-lock input-icon"></i>
                     <input type="password" id="loginPassword" class="form-input" placeholder="Ingresa tu contraseña" autocomplete="current-password" name="password" />
@@ -65,7 +65,7 @@
 
         <br><br>
 
-        <a href="index.html"><button type="submit" name="volver" class="submit-btn">Volver</button></a>
+        <a href="index.php"><button class="submit-btn">Volver</button></a>
 
         <script>
             function togglePw(inputId, btn) {
@@ -84,11 +84,13 @@
 </body>
 
 <br>
+<br>
+<hr>
 
 <footer>
-
-    <p>© 2026 Lectum</p>
-
+    <p>
+        <span style="color:#f4a261; font-weight:bold;">Lectum</span> © 2025/2026 · Proyecto fin de grado
+    </p>
 </footer>
 
 </html>
