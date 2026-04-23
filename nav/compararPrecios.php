@@ -2,7 +2,7 @@
 session_start();
 include __DIR__ . '/../backend/conexion.php';
 include __DIR__ . '/../header.php';
-
+require_once __DIR__ . '/config/config.php';
 //Cogemos los datos de la tienda y el id 
 $libros  = $conn->query("SELECT l.*, g.nombre AS genero_nombre FROM libros l JOIN generos g ON l.genero_id = g.id ORDER BY l.titulo")->fetchAll(PDO::FETCH_ASSOC);
 $precios = $conn->query("SELECT p.*, t.nombre AS tienda_nombre, t.icono AS tienda_icono, t.estrellas, t.envio FROM precios p JOIN tienda t ON p.tienda_id = t.id")->fetchAll(PDO::FETCH_ASSOC);
