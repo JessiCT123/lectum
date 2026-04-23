@@ -4,10 +4,6 @@ include("conexion.php");
 
 try {
 
-    if (isset($_POST['volver'])) {/*Si escoge volver lo enviará a index.php */
-        header("Location: /index.php");
-        exit();
-    }
     if (isset($_POST['nuevo'])) {
         $nombre = $_POST['nombre'];
         $usuario = $_POST["usuario"];
@@ -16,12 +12,6 @@ try {
         $password1 = $_POST["password1"];
 
         if (!empty($nombre) && !empty($usuario) && !empty($email) && !empty($password) && !empty($password1)) {/*comprobamos que todos los datos estén llenos*/
-
-            if (!isset($_POST['regTerms'])) {
-                $_SESSION['error_message'] = 'Debes aceptar los términos y condiciones.';
-                header("Location: registros.php");
-                exit();
-            }
 
             if (!preg_match('/[A-Z]/', $usuario)) {
                 $_SESSION['error_message'] = 'El usuario debe contener al menos una mayúscula.';
@@ -59,7 +49,7 @@ try {
                 exit();
             }
 
-            /*Realizamos la consulta en la tabla de usuarios para ver si ya existe un usuario igual*/
+            /*Realizamos la consulta en la tabla de usuarios para ver si ya existe un usuario o email igual*/
             $consulta = "SELECT * FROM usuarios WHERE usuario = :usuario OR email = :email";
             $sql = $conn->prepare($consulta);
             $sql->bindParam(":usuario", $usuario);
@@ -71,9 +61,11 @@ try {
                 header("Location: registros.php");
                 exit();
             } else {
-                /*Realizamos la inserción en la tabla de usuarios en caso de que no hay un usuario con el mismo usuario */
 
+                // hasheamos la contraseña antes de guardarla en la bd
                 $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+
+                //Realizamos la inserción en la tabla de usuarios en caso de que no hay un usuario con el mismo usuario 
                 $consulta = "INSERT INTO usuarios (nombre, usuario, email, password) VALUES(:nombre, :usuario, :email, :password)";
                 $sql = $conn->prepare($consulta);
                 $sql->bindParam(":nombre", $nombre);
@@ -104,10 +96,8 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro</title>
-    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="/css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-  
-
 
 </head>
 
@@ -117,20 +107,20 @@ try {
         <h1 class="form-heading">Bienvenido a Lectum</h1>
         <p class="form-subheading">Crea tu cuenta gratis</p>
 
-        <form id="registerForm" method="post" action="registros.php" novalidate>
+        <form method="post" action="registros.php">
             <div class="input-group">
-                <label for="regName">Nombre completo</label>
+                <label>Nombre completo</label>
                 <div class="input-wrap">
                     <i class="fa-solid fa-user input-icon"></i>
-                    <input type="text" id="regName" class="form-input" placeholder="Ingresa tu nombre completo" name="nombre" autocomplete="name" />
+                    <input type="text" class="form-input" placeholder="Ingresa tu nombre completo" name="nombre" autocomplete="name" />
                 </div>
             </div>
 
             <div class="input-group">
-                <label for="loginUser">Usuario</label>
+                <label>Usuario</label>
                 <div class="input-wrap">
                     <i class="fa-solid fa-user input-icon"></i>
-                    <input type="text" id="loginUser" class="form-input" placeholder="Ingrese su usuario" autocomplete="usuario" name="usuario" />
+                    <input type="text" class="form-input" placeholder="Ingrese su usuario" autocomplete="usuario" name="usuario" />
                 </div>
                 <ul style="color:#999; font-size:0.78rem; margin-top:0.4rem; padding-left:1.2rem;">
                     <li>Debe contener al menos una mayúscula.</li>
@@ -139,18 +129,18 @@ try {
             </div>
 
             <div class="input-group">
-                <label for="regEmail">Email</label>
+                <label>Email</label>
                 <div class="input-wrap">
                     <i class="fa-solid fa-envelope input-icon"></i>
-                    <input type="email" id="regEmail" class="form-input" placeholder="Ingresa tu email" name="email" autocomplete="email" />
+                    <input type="email" class="form-input" placeholder="Ingresa tu email" name="email" autocomplete="email" />
                 </div>
             </div>
 
             <div class="input-group">
-                <label for="regPassword">Contraseña</label>
+                <label>Contraseña</label>
                 <div class="input-wrap">
                     <i class="fa-solid fa-lock input-icon"></i>
-                    <input type="password" id="regPassword" class="form-input" placeholder="Mínimo 8 caracteres" name="password" oninput="checkStrength(this.value)" />
+                    <input type="password" id="regPassword" class="form-input" placeholder="Mínimo 8 caracteres" name="password" />
                     <button type="button" class="pw-toggle" onclick="togglePw('regPassword',this)">
                         <i class="fa-solid fa-eye"></i>
                     </button>
@@ -159,26 +149,24 @@ try {
                     <ul style="color:#999; font-size:0.78rem; margin-top:0.4rem; padding-left:1.2rem;">
                         <li>Debe contener al menos 8 caracteres.</li>
                     </ul>
-                    <span class="strength-label" id="strengthLabel"></span>
                 </div>
-                <span class="error-msg" id="errRegPw">Mínimo 8 caracteres.</span>
             </div>
 
             <div class="input-group">
-                <label for="regConfirm">Confirmar contraseña</label>
+                <label>Confirmar contraseña</label>
                 <div class="input-wrap">
                     <i class="fa-solid fa-lock input-icon"></i>
-                    <input type="password" id="regConfirm" class="form-input" placeholder="Repite tu contraseña" name="password1" />
+                    <input type="password" class="form-input" placeholder="Repite tu contraseña" name="password1" />
                 </div>
             </div>
 
-            <div class="check-group">
-                <input type="checkbox" id="regTerms" name="regTerms" required />
+            <!--<div class="check-group">
+                <input type="checkbox" id="regTerms" name="regTerms" />
                 <label for="regTerms">
                     Acepto los <a href="#">términos y condiciones</a> y la
                     <a href="#">política de privacidad</a>.
                 </label>
-            </div>
+            </div>-->
 
             <?php
             /*Si no se ha encontrado el usuario ni contraseña se mostrará el mensaje de error. */
@@ -190,7 +178,7 @@ try {
             <?php if (isset($_SESSION['success_message'])): ?>
                 <p style="color:green">✅ Usuario creado</p>
                 <br>
-                <button type="submit" class="submit-btn"><a href="sesion.php">Iniciar sesión</a></button>
+                <a href="sesion.php"><button class="submit-btn">Iniciar sesión</button></a>
                 <?php unset($_SESSION['success_message']); ?>
             <?php endif; ?>
 
@@ -202,9 +190,8 @@ try {
         </form>
 
         <br>
-<!--  ruta relativa para evitar errores -->
 
-        <a href="../index.php"><button type="submit" name="volver" class="submit-btn">Volver</button></a>
+        <a href="/index.php"><button class="submit-btn">Volver</button></a>
 
     </div>
 
@@ -221,12 +208,14 @@ try {
             }
         }
     </script>
-<footer>
- <p class="text-sm text-[#a8a5a0] text-center md:text-left">
-      <span class="font-display text-[#f4a261]">Lectum</span> © 2025/2026 · Proyecto fin de grado
-    </p>
 
-</footer>
 </body>
+
+<footer style="margin-top:40px; text-align:center; padding:15px; color:#a8a5a0; font-size:13px;">
+    <p>
+        <span style="color:#f4a261; font-weight:bold;">Lectum</span>
+        © 2025/2026 · Proyecto fin de grado
+    </p>
+</footer>
 
 </html>

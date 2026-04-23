@@ -1,7 +1,7 @@
 <?php
 session_start();
-include("backend/conexion.php");
-include 'header.php';
+include __DIR__ . '/../backend/conexion.php';
+include __DIR__ . '/../header.php';
 
 if ($_POST) {
 
@@ -179,7 +179,7 @@ por <?= htmlspecialchars($r['nombre']) ?>
 
 <script>
 
-let valoracion = 0;
+let valoracion = parseInt(document.getElementById("valoracion").value) || 0;
 
 document.querySelectorAll(".star-btn").forEach(btn => {
 btn.addEventListener("click", () => {
@@ -197,7 +197,7 @@ document.getElementById("valoracion").value = valoracion;
 
 </script>
 
-<?php include 'footer.php'; ?>
+<?php include __DIR__ . '/../footer.php'; ?>
 
 </body>
 </html>

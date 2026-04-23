@@ -1,7 +1,7 @@
 <?php
 session_start();
-include 'backend/conexion.php';
-include 'header.php';
+include __DIR__ . '/../backend/conexion.php';
+include __DIR__ . '/../header.php';
 
 $userId = isset($_SESSION['id']) ? $_SESSION['id'] : null;
 $isLoggedIn = $userId ? 'true' : 'false';
@@ -81,7 +81,7 @@ if ($userId) {
         const msgBox = document.getElementById('msg-vacio');
         const txtMsg = document.getElementById('txt-vacio');
 
-        //comprobamso si el usuario ha iniciado sesión 
+        //comprobamos si el usuario ha iniciado sesión 
 
         if (window.SESION_ACTIVA != true) {
             msgBox.classList.remove('hidden');
@@ -186,7 +186,7 @@ if ($userId) {
         let portada;
 
         if (libro.portada != null && libro.portada != '') {
-            portada = '<img src="img/' + libro.portada + '" alt="' + libro.titulo + '" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">';
+            portada = '<img src="/img/' + libro.portada + '" alt="' + libro.titulo + '" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">';
         } else {
             portada = '<i class="fa-solid fa-book text-4xl text-[#a8a5a0]"></i>';
         }
@@ -213,4 +213,4 @@ if ($userId) {
     }
 </script>
 
-<?php include 'footer.php'; ?>
+<?php include __DIR__ . '/../footer.php'; ?>

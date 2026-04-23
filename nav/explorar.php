@@ -2,8 +2,8 @@
 
 <?php
 session_start();
-include 'backend/conexion.php';
-include 'header.php';
+include __DIR__ . '/../backend/conexion.php';
+include __DIR__ . '/../header.php';
 
 //comprobamos si el usuario  a iniciado sesión 
 $userId = isset($_SESSION['id']) ? $_SESSION['id'] : null;
@@ -116,7 +116,7 @@ $generos = $conn->query("SELECT * FROM generos ORDER BY nombre")->fetchAll();
                 grid.innerHTML +=
                     '<div class="book-card group cursor-pointer">' +
                     '<div class="aspect-[3/4] overflow-hidden relative rounded-lg" onclick=\'verLibro(' + JSON.stringify(libro) + ')\'>' +
-                    '<img src="img/' + libro.portada + '" onerror="this.src=\'img/default.jpg\'" class="w-full h-full object-cover transition-transform group-hover:scale-105">' +
+                    '<img src="/img/' + libro.portada + '" onerror="this.src=\'/img/default.jpg\'" class="w-full h-full object-cover transition-transform group-hover:scale-105">' +
                     '<span class="absolute top-2 left-2 bg-black/70 backdrop-blur-sm text-white text-[10px] px-2 py-1 rounded">' + libro.genero_nombre + '</span>' +
                     '</div>' +
                     '<div class="p-3">' +
@@ -142,7 +142,7 @@ $generos = $conn->query("SELECT * FROM generos ORDER BY nombre")->fetchAll();
             datos.append('libro_id', libro_id);
             datos.append('estado', estado);
 
-            fetch('backend/guardar_estado.php', {
+            fetch('/backend/guardar_estado.php', {
                     method: 'POST',
                     body: datos
                 })
@@ -167,20 +167,23 @@ $generos = $conn->query("SELECT * FROM generos ORDER BY nombre")->fetchAll();
                 });
         }
 
-        // Escuchar cambios en los filtros
-        document.getElementById('filter-autor').addEventListener('input', aplicarFiltros);
-        document.getElementById('filter-genero').addEventListener('change', aplicarFiltros);
-        document.getElementById('filter-valoracion').addEventListener('change', aplicarFiltros);
-
-        //Mostar libro desde el buscador 
+        
+         //Mostar libro desde el buscador 
         var params = new URLSearchParams(window.location.search);
         var buscarUrl = params.get('buscar');
         if (buscarUrl) {
             document.getElementById('filter-autor').value = buscarUrl;
         }
 
+        // Escuchar cambios en los filtros
+        document.getElementById('filter-autor').addEventListener('input', aplicarFiltros);
+        document.getElementById('filter-genero').addEventListener('change', aplicarFiltros);
+        document.getElementById('filter-valoracion').addEventListener('change', aplicarFiltros);
+
+       
+
         // Cargar todos los libros al entrar
         aplicarFiltros();
     </script>
 </section>
-<?php include 'footer.php'; ?>
+<?php include __DIR__ . '/../footer.php';?>

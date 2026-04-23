@@ -1,7 +1,7 @@
 <?php
 session_start();
-include 'backend/conexion.php';
-include 'header.php';
+include __DIR__ . '/../backend/conexion.php';
+include __DIR__ . '/../header.php';
 
 //Cogemos los datos de la tienda y el id 
 $libros  = $conn->query("SELECT l.*, g.nombre AS genero_nombre FROM libros l JOIN generos g ON l.genero_id = g.id ORDER BY l.titulo")->fetchAll(PDO::FETCH_ASSOC);
@@ -71,4 +71,5 @@ $idLibro = isset($_GET['id']) ? $_GET['id'] : '';
     });
 </script>
 </section>
-<?php include 'footer.php'; ?>
+<!--Devolvemos a la carpeta actual y cambiamos de nivel entre carpetas-->
+<?php include __DIR__ . '/../footer.php'; ?>

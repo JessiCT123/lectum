@@ -1,6 +1,7 @@
 <?php
 session_start();
 include 'backend/conexion.php';
+include 'backend/auth.php';
 include 'header.php';
 
 // ── Cargar datos  ──
@@ -194,7 +195,7 @@ if (isset($_SESSION['id'])) {
         <div id="msg-${libro.id}" class="hidden text-xs mt-2 text-center text-white">
 </div>
 
-            <a href="compararPrecios.php?id=${libro.id}" class="flex items-center justify-center gap-2 w-full bg-[#16213e] hover:bg-[#f4a261] text-[#f4a261] hover:text-[#0f0f1a] py-3 rounded-xl border border-[#f4a261]/50 font-bold text-xs transition-all uppercase tracking-widest">
+            <a href="nav/compararPrecios.php?id=${libro.id}" class="flex items-center justify-center gap-2 w-full bg-[#16213e] hover:bg-[#f4a261] text-[#f4a261] hover:text-[#0f0f1a] py-3 rounded-xl border border-[#f4a261]/50 font-bold text-xs transition-all uppercase tracking-widest">
                 <i class="fas fa-tag text-[10px]"></i> VER PRECIOS
             </a>
         </div>
