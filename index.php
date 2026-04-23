@@ -3,6 +3,7 @@ session_start();
 include 'backend/conexion.php';
 include 'backend/auth.php';
 include 'header.php';
+require_once __DIR__ . '/config/config.php';
 
 // ── Cargar datos  ──
 $libros = $conn->query("SELECT l.*, g.nombre AS genero_nombre FROM libros l JOIN generos g ON l.genero_id = g.id ORDER BY l.id")->fetchAll();
