@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'conexion.php'; // tu conexión a la BD
+include 'conexion.php';
 
 try {
 
@@ -8,7 +8,7 @@ try {
         $usuario = $_POST["usuario"];
         $password = $_POST["password"];
 
-        /*Realizamos la consulta en la tabla de usuarios para ver si existe el usuario ingresado */
+        /*Realizamos la consulta en la tabla de usuarios para ver si existe el usuario o email ingresado */
         $consulta = "SELECT * FROM usuarios WHERE usuario = :usuario OR email = :usuario";
         $sql = $conn->prepare($consulta);
         $sql->bindParam(":usuario", $usuario);
@@ -17,19 +17,21 @@ try {
         /*Obtienemos el resultado de la consulta SQL */
         $row = $sql->fetch(PDO::FETCH_ASSOC);
 
-        // Verificar usuario y contraseña
+        //Verificar usuario y contraseña
         if ($row && password_verify($password, $row['password'])) {
 
             // Guardar sesión con datos reales
-            $_SESSION['usuario'] = $row['usuario'];
             $_SESSION['id'] = $row['id'];
+            $_SESSION['usuario'] = $row['usuario'];
+            $_SESSION['nombre'] = $row['nombre'];
+            $_SESSION['email'] = $row['email'];
 
-            // RECORDAR SESIÓN
+            // recordar sesión
             if (isset($_POST['rememberMe'])) {
 
                 $token = bin2hex(random_bytes(32));
                 $hash = hash('sha256', $token);
-                $expiry = date("Y-m-d H:i:s", time() + (86400 * 15)); // 15 días
+                $expiry = date("Y-m-d H:i:s", time() + (86400 * 7)); // 7 días
 
                 // Borrar tokens anteriores
                 $delete = $conn->prepare("DELETE FROM remember_tokens WHERE usuario_id = :id");
@@ -49,12 +51,13 @@ try {
                 setcookie("remember_token", $token, [
                     'expires' => time() + (86400 * 15),
                     'path' => '/',
-                    'httponly' => true, // No se puede acceder a la cookie desde JavaScript
-                    'samesite' => 'Strict' // Evita que la cookie se envíe en peticiones externas 
+                    'httponly' => true,
+                    'samesite' => 'Strict'
+                    // 'secure' => true // activar si usas HTTPS
                 ]);
             }
 
-            header("Location: index.html");
+            header("Location: index.php");
             exit();
         } else {
             $_SESSION['error_message'] = 'Usuario/email o contraseña incorrectos.';
@@ -69,3 +72,4 @@ try {
 } catch (PDOException $e) {
     echo $e->getMessage();
 }
+?>
