@@ -2,6 +2,7 @@
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
+require_once __DIR__ . '/config/config.php';
 // Detecta qué página está activa comparando el nombre del archivo actual
 $paginaActual = basename($_SERVER['PHP_SELF']);
 ?>
@@ -13,12 +14,13 @@ $paginaActual = basename($_SERVER['PHP_SELF']);
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mi Biblioteca Personal</title>
 
-  <link rel="stylesheet" href="/css/styles.css">
-
+  <link rel="stylesheet" href="<?= BASE_URL ?>/css/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
-  <script src="/js/func.js" defer></script>
-  <script src="/js/events.js" defer></script>
+  <script src="<?= BASE_URL ?>/js/func.js" defer></script>
+  <script src="<?= BASE_URL ?>/js/events.js" defer></script>
 
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
@@ -51,12 +53,14 @@ $paginaActual = basename($_SERVER['PHP_SELF']);
             <!-- Sesiones -->
             <?php if (isset($_SESSION['id'])): ?>
               <button id="boton-perfil" onclick="mostrarModalPerfil()" class="relative w-10 h-10 rounded-full bg-[#2a2a4a] flex items-center justify-center overflow-hidden border border-transparent hover:border-[#f4a261] transition-all">
-                <span id="icono-por-defecto" class="text-xl"><a href="/backend/cerrarSesion.php">✅</a></span>
+                <span id="icono-por-defecto" class="text-xl">
+                <a href="<?= BASE_URL ?>/backend/perfil.php"><i class="fa-solid fa-user"></i></a>
+                </span>
                 <img id="avatar-seleccionado-user" src="" class="hidden w-full h-full object-cover">
               </button>
             <?php else: ?>
-              <a href="/backend/sesion.php" id="boton-perfil" class="relative w-10 h-10 rounded-full bg-[#2a2a4a] flex items-center justify-center overflow-hidden border border-transparent hover:border-[#f4a261] transition-all">
-                <span id="icono-por-defecto" class="text-xl">👤</span>
+              <a href="<?= BASE_URL ?>/backend/sesion.php" id="boton-perfil" class="relative w-10 h-10 rounded-full bg-[#2a2a4a] flex items-center justify-center overflow-hidden border border-transparent hover:border-[#f4a261] transition-all">
+                <i class="fa-solid fa-user"></i>
               </a>
             <?php endif; ?>
 
@@ -79,27 +83,27 @@ $paginaActual = basename($_SERVER['PHP_SELF']);
             Inicio
           </a>
 
-          <a href="/nav/explorar.php"
+          <a href="<?= BASE_URL ?>/nav/explorar.php"
             class="nav-tab px-4 py-3 text-sm font-medium <?= $paginaActual === 'explorar.php' ? 'tab-active' : '' ?>">
             Explorar
           </a>
 
-          <a href="/nav/misLibros.php"
+          <a href="<?= BASE_URL ?>/nav/misLibros.php"
             class="nav-tab px-4 py-3 text-sm font-medium <?= $paginaActual === 'misLibros.php' ? 'tab-active' : '' ?>">
             Mis Libros
           </a>
 
-          <a href="/nav/resenias.php"
+          <a href="<?= BASE_URL ?>/nav/resenias.php"
             class="nav-tab px-4 py-3 text-sm font-medium <?= $paginaActual === 'resenias.php' ? 'tab-active' : '' ?>">
             Reseñas
           </a>
 
-          <a href="/nav/compararPrecios.php"
+          <a href="<?= BASE_URL ?>/nav/compararPrecios.php"
             class="nav-tab px-4 py-3 text-sm font-medium <?= $paginaActual === 'compararPrecios.php' ? 'tab-active' : '' ?>">
             Comparar Precios
           </a>
 
-          <a href="/nav/contacto.php"
+          <a href="<?= BASE_URL ?>/nav/contacto.php"
             class="nav-tab px-4 py-3 text-sm font-medium <?= $paginaActual === 'contacto.php' ? 'tab-active' : '' ?>">
             Contacto
           </a>
