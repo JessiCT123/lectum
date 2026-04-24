@@ -1,13 +1,11 @@
-<!-- EXPLORAR -->
 <?php
-
+require_once __DIR__ . '/../config/config.php';
 include __DIR__ . '/../backend/conexion.php';
 include __DIR__ . '/../header.php';
-require_once __DIR__ . '/../config/config.php';
+
 //comprobamos si el usuario  a iniciado sesión 
 $userId = isset($_SESSION['id']) ? $_SESSION['id'] : null;
 $isLoggedIn = $userId ? 'true' : 'false';
-
 
 
 // ── Cargar datos  ──
@@ -187,6 +185,4 @@ $generos = $conn->query("SELECT * FROM generos ORDER BY nombre")->fetchAll();
         // Cargar todos los libros al entrar
         aplicarFiltros();
     </script>
-    <script>window.BASE_URL = '<?= BASE_URL ?>';</script>
-</section>
 <?php include __DIR__ . '/../footer.php';?>

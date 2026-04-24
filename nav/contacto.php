@@ -1,7 +1,7 @@
 <?php
+require_once __DIR__ . '/../config/config.php';
 include __DIR__ . '/../header.php';
-require_once __DIR__ . '/../config/config.php';?>
-
+?>
 
 <div id="contacto" class="seccion">
     <h2> contacto</h2>

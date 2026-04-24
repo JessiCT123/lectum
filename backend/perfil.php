@@ -30,7 +30,7 @@ if (!isset($_SESSION['usuario'])) {
 
         <!-- foto de perfil -->
         <div class="perfil-img">
-            <img src="perfil.jpg">
+            <i class="fa-solid fa-user" style="font-size: 60px; color: #c9933a;"></i>
             <br><br>
             <button class="submit-btn">Cambiar foto</button>
         </div>

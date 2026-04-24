@@ -1,8 +1,8 @@
 <?php
-session_start();
+require_once __DIR__ . '/../config/config.php';
 include __DIR__ . '/../backend/conexion.php';
 include __DIR__ . '/../header.php';
-require_once __DIR__ . '/../config/config.php';
+
 
 if ($_POST) {
 

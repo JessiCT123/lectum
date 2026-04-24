@@ -1,8 +1,8 @@
 <?php
-session_start();
+require_once __DIR__ . '/../config/config.php';
 include __DIR__ . '/../backend/conexion.php';
 include __DIR__ . '/../header.php';
-require_once __DIR__ . '/../config/config.php';
+
 
 $userId = isset($_SESSION['id']) ? $_SESSION['id'] : null;
 $isLoggedIn = $userId ? 'true' : 'false';
@@ -54,7 +54,7 @@ if ($userId) {
     </div>
 
 </main>
-
+<script>window.BASE_URL = '<?= BASE_URL ?>';</script>
 <script>
     window.DB_LIBROS = <?= json_encode($librosBase) ?>;
     window.USER_COL = <?= json_encode($coleccionUsuario) ?>;
@@ -213,6 +213,4 @@ if ($userId) {
             '</div>';
     }
 </script>
-<script>window.BASE_URL = '<?= BASE_URL ?>';</script>
-
 <?php include __DIR__ . '/../footer.php'; ?>
