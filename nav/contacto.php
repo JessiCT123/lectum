@@ -3,7 +3,7 @@ include __DIR__ . '/../header.php';
 require_once __DIR__ . '/../config/config.php'; ?>
 
 <div class="texto-centro">
-      <p class="frase">
+    <p class="frase">
         “No hay mayor magia que la que ocurre cuando abres un libro y, sin darte cuenta, comienzas a vivir dentro de otra vida que solo existe en tu imaginación.”
     </p>
     <p class="autor">— Antoine de Saint-Exupéry, <i>El Principito</i></p>
@@ -22,14 +22,14 @@ require_once __DIR__ . '/../config/config.php'; ?>
         Sábados:            10:30 a 14:00   
         Domingos:             CERRADO     
 
-      <i class="fa-solid fa-phone"></i></i> Teléfono: 963 258 741
-      <i class="fa-regular fa-envelope-open"></i> Email:lectum.info@gmail.com
-      <i class="fa-solid fa-location-dot"></i> Dirección: C/Miguel Hernandez 
+    <i class="fa-solid fa-phone"></i></i> Teléfono: 963 258 741
+    <i class="fa-regular fa-envelope-open"></i> Email: lectum.info@gmail.com
+    <i class="fa-solid fa-location-dot"></i> Dirección: C/Miguel Hernandez 
 
     </pre>
         </div>
 
-        <section class="seccion">
+        <section class="mapa">
             <h2>Nuestra ubicación</h2>
 
             <iframe
@@ -40,5 +40,5 @@ require_once __DIR__ . '/../config/config.php'; ?>
     </div>
 </div>
 
-            <!--Devolvemos a la carpeta actual y cambiamos de nivel entre carpetas-->
-            <?php include __DIR__ . '/../footer.php'; ?>
+<!--Devolvemos a la carpeta actual y cambiamos de nivel entre carpetas-->
+<?php include __DIR__ . '/../footer.php'; ?>
