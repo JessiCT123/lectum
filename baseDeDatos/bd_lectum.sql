@@ -1,6 +1,6 @@
-/*CREATE DATABASE bd_lectum;
+CREATE DATABASE bd_lectum;
 use bd_lectum;
-*/
+
 CREATE TABLE generos (
   id INT AUTO_INCREMENT PRIMARY KEY,
   nombre VARCHAR(100)
