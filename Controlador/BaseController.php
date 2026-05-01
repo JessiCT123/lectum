@@ -18,9 +18,10 @@ abstract class BaseController
         include_once dirname(__DIR__) . '/Vista/' . $vista . '.php';
     }
 
-    protected function redirect(string $ruta): void
+    protected function redirect(string $ruta, array $params = []): void
     {
-        header('Location: ' . BASE_URL . '/' . ltrim($ruta, '/'));
+        $query = $params ? '?' . http_build_query($params) : '';
+        header('Location: ' . BASE_URL . '/' . ltrim($ruta, '/') . $query);
         exit;
     }
 

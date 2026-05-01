@@ -102,7 +102,7 @@ function renderizarDestacados() {
 
 
 function renderizarExplorar() {
-    const libros = globalThis.LIBROS || [];
+    const libros = window.LIBROS || [];
 
     const genero = document.getElementById("filter-genero").value;
     const autor = document.getElementById("filter-autor").value.toLowerCase();
@@ -161,18 +161,18 @@ function mostrarResenia(idLibro) {
     const contenedor = document.getElementById('resenias-box');
 
     // buscamos las reseñas del libro
-    const resenias = (globalThis.RESENIAS || []).find(r => r.libro_id == idLibro);
+    let todas = globalThis.RESENIAS || [];
+    let resenias = idLibro ? todas.filter(r => r.libro_id == idLibro) : todas;
 
     if (!resenias) return;
 
-        $reseniaCard='';
+    let reseniaCard = '';
 
-   for (let resenia of resenias) {
-        const estrellasLlenas = "★".repeat(resenia.valoracion);
-        const estrellasVacias = "☆".repeat(5 - resenia.valoracion);
+    for (let resenia of resenias) {
+        let estrellasLlenas = "★".repeat(resenia.valoracion);
+        let estrellasVacias = "☆".repeat(5 - resenia.valoracion);
 
-         $reseniaCard += `
-            <div class="review-card">
+        reseniaCard += `<div class="review-card">
                 <div class="review-header">
                     <span>${resenia.titulo_libro}</span>
                     <span>${resenia.fecha}</span>
@@ -187,12 +187,10 @@ function mostrarResenia(idLibro) {
             </div>
         `;
     }
-    contenedor.innerHTML=$reseniaCard;
+    contenedor.innerHTML = reseniaCard;
 }
 
-
-
-// comparar Precios 
+// comparar Precios
 function mostrarPreciosLibro(idLibro) {
     const contenedor = document.getElementById('store-prices');
     const infoLibro = document.getElementById('selected-book-info');

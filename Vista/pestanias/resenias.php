@@ -95,9 +95,7 @@ include_once dirname(__DIR__) . '/header.php';
                     </div>
 
                     <!-- Resultado comparación -  -->
-                    <div id="resenias-box" class="hidden">
-        
-                    </div>
+                    <div id="resenias-box" class=""></div>
                 </div>
 
             </section>
@@ -125,13 +123,11 @@ include_once dirname(__DIR__) . '/header.php';
             let idLibro = '<?= $idLibro ?>';
             if (idLibro != '') {
                 select.value = idLibro;
-                mostrarResenia(idLibro);
             }
+            mostrarResenia(idLibro);
 
             select.addEventListener('change', function() {
-                if (this.value != '') {
                     mostrarResenia(this.value);
-                }
             });
         });
 

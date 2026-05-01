@@ -37,7 +37,7 @@ class ReseniasController extends BaseController
         ];
         $this->reseniaModelo->create($resenia);
 
-        $this->redirect('resenias');
+        $this->redirect('resenias', ['id' => $resenia['libro_id']]);
     }
 
     public function eliminar()
