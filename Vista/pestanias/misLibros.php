@@ -1,20 +1,9 @@
 <?php
-require_once __DIR__ . '/../config/config.php';
-include __DIR__ . '/../backend/conexion.php';
-include __DIR__ . '/../header.php';
+include_once dirname(__DIR__) . '/header.php';
 
 
 $userId = isset($_SESSION['id']) ? $_SESSION['id'] : null;
 $isLoggedIn = $userId ? 'true' : 'false';
-
-// Carga de datos base y colección
-$librosBase = $conn->query("SELECT l.*, g.nombre AS genero_nombre FROM libros l JOIN generos g ON l.genero_id = g.id")->fetchAll(PDO::FETCH_ASSOC);
-$coleccionUsuario = [];
-if ($userId) {
-    $stmt = $conn->prepare("SELECT libro_id, estado FROM usuario_libros WHERE usuario_id = :uid");
-    $stmt->execute([':uid' => $userId]);
-    $coleccionUsuario = $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
 ?>
 
 <main class="flex-grow-container max-w-7xl mx-auto px-6 pt-2 pb-10 bg-transparent">
@@ -27,19 +16,19 @@ if ($userId) {
     <!-- Filtros de estado -->
     <div class="flex flex-wrap gap-3 mb-8 status-filters">
         <button onclick="filtrarColeccion('all', this)"
-            class="status-filter-btn bg-[#f4a261] text-[#0f0f1a] px-3 py-1.5 rounded-lg text-[11px] font-bold uppercase tracking-widest transition-all">
+                class="status-filter-btn bg-[#f4a261] text-[#0f0f1a] px-3 py-1.5 rounded-lg text-[11px] font-bold uppercase tracking-widest transition-all">
             Todos
         </button>
         <button onclick="filtrarColeccion('leyendo', this)"
-            class="status-filter-btn bg-[#2a2a4a] text-[#a8a5a0] hover:bg-[#2a9d8f] hover:text-white px-3 py-1.5 rounded-lg text-[11px] font-bold uppercase tracking-widest transition-all border border-[#3a3a5a]">
+                class="status-filter-btn bg-[#2a2a4a] text-[#a8a5a0] hover:bg-[#2a9d8f] hover:text-white px-3 py-1.5 rounded-lg text-[11px] font-bold uppercase tracking-widest transition-all border border-[#3a3a5a]">
             Leyendo
         </button>
         <button onclick="filtrarColeccion('terminado', this)"
-            class="status-filter-btn bg-[#2a2a4a] text-[#a8a5a0] hover:bg-[#f4a261] hover:text-[#0f0f1a] px-3 py-1.5 rounded-lg text-[11px] font-bold uppercase tracking-widest transition-all border border-[#3a3a5a]">
+                class="status-filter-btn bg-[#2a2a4a] text-[#a8a5a0] hover:bg-[#f4a261] hover:text-[#0f0f1a] px-3 py-1.5 rounded-lg text-[11px] font-bold uppercase tracking-widest transition-all border border-[#3a3a5a]">
             Terminados
         </button>
         <button onclick="filtrarColeccion('pendiente', this)"
-            class="status-filter-btn bg-[#2a2a4a] text-[#a8a5a0] hover:bg-gray-500 hover:text-white px-3 py-1.5 rounded-lg text-[11px] font-bold uppercase tracking-widest transition-all border border-[#3a3a5a]">
+                class="status-filter-btn bg-[#2a2a4a] text-[#a8a5a0] hover:bg-gray-500 hover:text-white px-3 py-1.5 rounded-lg text-[11px] font-bold uppercase tracking-widest transition-all border border-[#3a3a5a]">
             Pendientes
         </button>
     </div>
@@ -61,12 +50,12 @@ if ($userId) {
     window.SESION_ACTIVA = <?= $isLoggedIn ?>;
 
     //la función se ejecuta al cargar la página
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         renderColeccion('all');
     });
 
 
-    //mapa de libro por ID 
+    //mapa de libro por ID
     function buildColeccionMap() {
         var map = {};
         for (var i = 0; i < window.USER_COL.length; i++) {
@@ -82,7 +71,7 @@ if ($userId) {
         const msgBox = document.getElementById('msg-vacio');
         const txtMsg = document.getElementById('txt-vacio');
 
-        //comprobamos si el usuario ha iniciado sesión 
+        //comprobamos si el usuario ha iniciado sesión
 
         if (window.SESION_ACTIVA != true) {
             msgBox.classList.remove('hidden');
@@ -102,7 +91,7 @@ if ($userId) {
             }
         }
 
-        // mostrar los libros con filtros. 
+        // mostrar los libros con filtros.
 
         if (filtro != 'all') {
             var librosFiltrados = [];
@@ -132,7 +121,7 @@ if ($userId) {
             return;
         }
 
-        // si hay libros en la colección ocultamos los mensajes 
+        // si hay libros en la colección ocultamos los mensajes
         msgBox.classList.add('hidden');
         for (var i = 0; i < libros.length; i++) {
             grid.insertAdjacentHTML('beforeend', tarjetaHTML(libros[i], mapa[libros[i].id]));
@@ -140,7 +129,7 @@ if ($userId) {
     }
 
 
-    // botes para filtrar los estados 
+    // botes para filtrar los estados
     function filtrarColeccion(estado, btn) {
         document.querySelectorAll('.status-filter-btn').forEach(b => {
             b.classList.remove('bg-[#f4a261]', 'text-[#0f0f1a]');
@@ -180,14 +169,14 @@ if ($userId) {
                 color: 'bg-gray-600 text-white'
             };
         }
-        // 
+        //
 
 
-        //portada 
+        //portada
         let portada;
 
         if (libro.portada != null && libro.portada != '') {
-            portada = '<img src="' + window.BASE_URL + '/img/' + libro.portada + '" alt="' + libro.titulo + '" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">';
+            portada = '<img src="' + window.BASE_URL + '/Vista/assets/img/' + libro.portada + '" alt="' + libro.titulo + '" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">';
         } else {
             portada = '<i class="fa-solid fa-book text-4xl text-[#a8a5a0]"></i>';
         }
@@ -213,4 +202,4 @@ if ($userId) {
             '</div>';
     }
 </script>
-<?php include __DIR__ . '/../footer.php'; ?>
+<?php include_once __DIR__ . '/../footer.php'; ?>
