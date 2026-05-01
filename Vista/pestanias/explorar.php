@@ -98,9 +98,9 @@ $isLoggedIn = isset($_SESSION['id']) ? 'true' : 'false';
                     botonColeccion =
                         '<select class="mt-2 w-full bg-[#2a2a4a] border border-[#3a3a5a] rounded-lg px-2 py-1 text-xs text-[#a8a5a0]" onchange="agregarLibro(' + libro.id + ', this.value)">' +
                         '<option value="">+ Añadir a colección</option>' +
-                        '<option value="leyendo">Leyendo</option>' +
-                        '<option value="terminado">Terminado</option>' +
-                        '<option value="pendiente">Pendiente</option>' +
+                        '<option value="Pendiente">Pendiente</option>' +
+                        '<option value="Leyendo">Leyendo</option>' +
+                        '<option value="Terminado">Terminado</option>' +
                         '</select>' +
                         '<p id="msg-' + libro.id + '" class="text-[10px] text-[#2a9d8f] mt-1 hidden">Guardado</p>';
                 } else {
@@ -189,6 +189,12 @@ $isLoggedIn = isset($_SESSION['id']) ? 'true' : 'false';
             <a href="${window.BASE_URL}/inicio/compararPrecios?id=${libro.id}" class="flex items-center justify-center gap-2 w-full bg-[#16213e] hover:bg-[#f4a261] text-[#f4a261] hover:text-[#0f0f1a] py-3 rounded-xl border border-[#f4a261]/50 font-bold text-xs transition-all uppercase tracking-widest">
                 <i class="fas fa-tag text-[10px]"></i> VER PRECIOS
             </a>
+           <br> 
+           <a href="${window.BASE_URL}/resenias/?id=${libro.id}" class="flex items-center justify-center gap-2 w-full bg-[#16213e] hover:bg-[#f4a261] text-[#f4a261] hover:text-[#0f0f1a] py-3 rounded-xl border border-[#f4a261]/50 font-bold text-xs transition-all uppercase tracking-widest">
+                <i class="fas fa-tag text-[10px]"></i>  VER RESEÑAS
+            </a>
+             </br>
+
         </div>
     `);
         }

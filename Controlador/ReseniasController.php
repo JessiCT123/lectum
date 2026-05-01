@@ -20,8 +20,8 @@ class ReseniasController extends BaseController
     {
         $libros = $this->libroModelo->getAll();
         $resenias = $this->reseniaModelo->obtenerReseniasLibros();
-
-        $this->render('pestanias/resenias', compact('libros', 'resenias'));
+        $idLibro= $this->requestGet("id");
+        $this->render('pestanias/resenias', compact('libros', 'resenias','idLibro'));
     }
 
     public function publicar()

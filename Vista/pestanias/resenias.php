@@ -4,6 +4,7 @@ include_once dirname(__DIR__) . '/header.php';
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>Reseñas</title>
@@ -71,7 +72,7 @@ include_once dirname(__DIR__) . '/header.php';
                         <p style="color:var(--ink-soft); margin-bottom:15px;">Inicia sesión para poder escribir una
                             reseña.</p>
                         <a href="<?= BASE_URL ?>/auth"
-                           style="display:block; text-align:center; background:var(--gold); color:white; padding:12px; border-radius:var(--radius-sm); font-weight:600;">Iniciar
+                            style="display:block; text-align:center; background:var(--gold); color:white; padding:12px; border-radius:var(--radius-sm); font-weight:600;">Iniciar
                             sesión</a>
                     </div>
                 </aside>
@@ -84,30 +85,19 @@ include_once dirname(__DIR__) . '/header.php';
 
                     <h2>Reseñas recientes</h2>
 
-                    <?php foreach ($resenias as $r): ?>
+                    <!-- Selector de libro -->
 
-                        <div class="review-card">
+                    <div class="bg-[#1a1a2e] rounded-xl p-5 border border-[#2a2a4a] mb-6">
+                        <select id="book-select"
+                            class="w-full bg-[#2a2a4a] border border-[#3a3a5a] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#f4a261]">
+                            <option value="">Selecciona un libro para ver la reseña </option>
+                        </select>
+                    </div>
 
-                            <div class="review-header">
-                                <span><?= htmlspecialchars($r['titulo_libro']) ?></span>
-                                <span><?= $r['fecha'] ?></span>
-                            </div>
-
-                            <div>
-                                <?= str_repeat("★", $r['valoracion']) ?>
-                                <?= str_repeat("☆", 5 - $r['valoracion']) ?>
-                            </div>
-
-                            <div>
-                                por <?= htmlspecialchars($r['nombre']) ?>
-                            </div>
-
-                            <p><?= htmlspecialchars($r['texto']) ?></p>
-
-                        </div>
-
-                    <?php endforeach; ?>
-
+                    <!-- Resultado comparación -  -->
+                    <div id="resenias-box" class="hidden">
+        
+                    </div>
                 </div>
 
             </section>
@@ -117,6 +107,33 @@ include_once dirname(__DIR__) . '/header.php';
     </main>
 
     <script>
+        window.LIBROS = <?= json_encode($libros, JSON_THROW_ON_ERROR) ?>;
+         window.RESENIAS = <?= json_encode($resenias, JSON_THROW_ON_ERROR) ?>;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            let select = document.getElementById('book-select');
+
+            for (let i = 0; i < window.LIBROS.length; i++) {
+                let libro = window.LIBROS[i];
+                let opcion = document.createElement('option');
+                opcion.value = libro.id;
+                opcion.textContent = libro.titulo;
+                select.appendChild(opcion);
+            }
+
+            //  cuando tenemos el id del libro ,lo seleccionamos automáticamente
+            let idLibro = '<?= $idLibro ?>';
+            if (idLibro != '') {
+                select.value = idLibro;
+                mostrarResenia(idLibro);
+            }
+
+            select.addEventListener('change', function() {
+                if (this.value != '') {
+                    mostrarResenia(this.value);
+                }
+            });
+        });
 
         let valoracion = parseInt(document.getElementById("valoracion").value) || 0;
 
@@ -133,10 +150,10 @@ include_once dirname(__DIR__) . '/header.php';
         document.getElementById("review-form").addEventListener("submit", () => {
             document.getElementById("valoracion").value = valoracion;
         });
-
     </script>
 
     <?php include_once __DIR__ . '/../footer.php'; ?>
 
 </body>
+
 </html>

@@ -156,80 +156,41 @@ function renderizarResenias() {
   `).join("");
 }
 
-/*
-//colección
+// compararmos las reseñas 
+function mostrarResenia(idLibro) {
+    const contenedor = document.getElementById('resenias-box');
 
-function renderColeccion() {
-  const grid = document.getElementById('grid-coleccion');
-  const msg = document.getElementById('msg-vacio');
-  const txt = document.getElementById('txt-vacio');
+    // buscamos las reseñas del libro
+    const resenias = (globalThis.RESENIAS || []).find(r => r.libro_id == idLibro);
 
-  if (!globalThis.SESION_ACTIVA) {
-    grid.innerHTML = '';
-    msg.classList.remove('hidden');
-    txt.innerText = "Hay que iniciar sesión para ver tus libros.";
-    return;
-  }
+    if (!resenias) return;
 
-  if (globalThis.USER_COL.length == 0) {
-    grid.innerHTML = '';
-    msg.classList.remove('hidden');
-    txt.innerText = "Tu colección está vacía. ¡Añade tu primer libro!";
-    return;
-  }
+        $reseniaCard='';
 
-  filtrarColeccion('all');
-}
-function filtrarColeccion(filtro, btn) {
-  const grid = document.getElementById('grid-coleccion');
-  const msg = document.getElementById('msg-vacio');
+   for (let resenia of resenias) {
+        const estrellasLlenas = "★".repeat(resenia.valoracion);
+        const estrellasVacias = "☆".repeat(5 - resenia.valoracion);
 
-  if (btn) {
-    document.querySelectorAll('.status-filter-btn').forEach(b => {
-      b.classList.remove('bg-[#f4a261]');
-      b.classList.add('bg-[#2a2a4a]');
-    });
-    btn.classList.add('bg-[#f4a261]');
-    btn.classList.remove('bg-[#2a2a4a]');
-  }
-
-  // Unir info base con estado del usuario
-  let items = globalThis.USER_COL.map(c => {
-    let libro = globalThis.DB_LIBROS.find(l => l.id == c.libro_id);
-    return {libro, estado_usuario: c.estado };
-  });
-
-  if(filtro !== 'all') {
-    items = items.filter(i => i.estado_usuario == filtro);
-  }
-
-  grid.innerHTML = '';
-
-  if (items.length == 0) {
-    msg.classList.remove('hidden');
-    document.getElementById('txt-vacio').innerText = "No hay libros en esta categoría.";
-  } else {
-    msg.classList.add('hidden');
-    items.forEach(libro => {
-      grid.innerHTML += `
-                <div class="book-card cursor-pointer group" onclick='verLibro(${JSON.stringify(libro)})'>
-                    <div class="aspect-[3/4] overflow-hidden rounded shadow-sm relative">
-                        <img src="../img/${libro.portada}" onerror="this.src='/lectum/img/default.jpg'" class="w-full h-full object-cover">
-                        <div class="absolute bottom-2 right-2">
-                             <span class="bg-[#c9933a] text-white text-[9px] px-2 py-1 rounded-sm uppercase font-black shadow-lg">
-                                ${libro.estado_usuario}
-                             </span>
-                        </div>
-                    </div>
-                    <div class="mt-4 px-1">
-                        <h4 class="font-display font-bold text-base leading-tight truncate group-hover:text-[#c9933a] transition-colors">${libro.titulo}</h4>
-                        <p class="text-tinta-tenue text-xs italic mt-1 font-body">${libro.autor}</p>
-                    </div>
+         $reseniaCard += `
+            <div class="review-card">
+                <div class="review-header">
+                    <span>${resenia.titulo_libro}</span>
+                    <span>${resenia.fecha}</span>
                 </div>
-            `;
-    });
-  }
-}*/
+                <div>
+                    ${estrellasLlenas}${estrellasVacias}
+                </div>
+                <div>
+                    por ${resenia.nombre}
+                </div>
+                <p>${resenia.texto}</p>
+            </div>
+        `;
+    }
+    contenedor.innerHTML=$reseniaCard;
+}
+
+
 
 // comparar Precios 
 function mostrarPreciosLibro(idLibro) {
