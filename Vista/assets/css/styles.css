@@ -1321,6 +1321,7 @@ section .panel {
 .contacto-contenedor .imgContacto {
     width: 100%;
     max-width: 420px;
+    height: auto;
     margin-bottom: 15px;
     border-radius: var(--radius);
     box-shadow: var(--shadow-sm);
@@ -1329,6 +1330,15 @@ section .panel {
     gap: 20px; /* controla la separación entre bloques*/
     justify-content: center;
 }
+
+/* Contenedor mapa */
+.contacto-contenedor .mapa {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* controla la separación entre bloques*/
+    justify-content: center;
+}
+
 
 /* RESPONSIVE */
 

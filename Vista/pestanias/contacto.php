@@ -17,18 +17,20 @@ include_once dirname(__DIR__) . '/header.php'
         <div class=" imgContacto">
 
             <img src="<?= BASE_URL ?>/Vista/assets/img/logo.png" alt="imgContacto" class="imgContacto">
-            <pre>
-<u><b>Horario de atención telefónica para soporte e incidencias técnicas:</b></u>
-        Lunes a Viernes:    09:30 a 20:30
-        Sábados:            10:30 a 14:00
-        Domingos:             CERRADO
 
-    <i class="fa-solid fa-phone"></i></i> Teléfono: 963 258 741
-    <i class="fa-regular fa-envelope-open"></i> Email: lectum.info@gmail.com
-    </pre>
         </div>
 
-       
+        <section class="mapa">
+            <pre>
+<u><b>Horario de atención telefónica:</b></u>
+    Lunes a Viernes:    09:30 a 20:30
+    Sábados:            10:30 a 14:00
+    Domingos:           CERRADO
+
+<i class="fa-solid fa-phone"></i></i> Teléfono: 963 258 741
+<i class="fa-regular fa-envelope-open"></i> Email: lectum.info@gmail.com
+    </pre>
+        </section>
     </div>
 </div>
 
