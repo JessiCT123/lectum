@@ -18,7 +18,7 @@ $isLoggedIn = isset($_SESSION['id']) ? 'true' : 'false';
 
             <!-- Filtro por género -->
             <select id="filter-genero"
-                    class="bg-[#2a2a4a] border border-[#3a3a5a] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#f4a261]">
+                class="bg-[#2a2a4a] border border-[#3a3a5a] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#f4a261]">
                 <option value="">Todos los géneros</option>
                 <?php foreach ($generos as $gen): ?>
                     <option value="<?= htmlspecialchars($gen['nombre']) ?>"><?= ucfirst(htmlspecialchars($gen['nombre'])) ?></option>
@@ -27,7 +27,7 @@ $isLoggedIn = isset($_SESSION['id']) ? 'true' : 'false';
 
             <!-- Filtro por valoración -->
             <select id="filter-valoracion"
-                    class="bg-[#2a2a4a] border border-[#3a3a5a] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#f4a261]">
+                class="bg-[#2a2a4a] border border-[#3a3a5a] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#f4a261]">
                 <option value="">Todas las reseñas</option>
                 <option value="positive">Reseñas positivas (4-5)</option>
                 <option value="negative">Reseñas negativas (1-2)</option>
@@ -35,7 +35,7 @@ $isLoggedIn = isset($_SESSION['id']) ? 'true' : 'false';
 
             <!-- Filtro por autor -->
             <input type="text" id="filter-autor" placeholder="Buscar por autor..."
-                   class="bg-[#2a2a4a] border border-[#3a3a5a] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#f4a261] flex-1 min-w-48">
+                class="bg-[#2a2a4a] border border-[#3a3a5a] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#f4a261] flex-1 min-w-48">
 
         </div>
     </div>
@@ -44,13 +44,15 @@ $isLoggedIn = isset($_SESSION['id']) ? 'true' : 'false';
     <div id="explore-results" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4"></div>
 
     <div id="ui-modal"
-         class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[100] hidden items-center justify-center p-4">
+        class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[100] hidden items-center justify-center p-4">
         <div id="ui-content"
-             class="bg-[#1a1a2e] border border-[#2a2a4a] max-w-sm w-full rounded-2xl p-6 shadow-2xl transform transition-all scale-95 opacity-0">
+            class="bg-[#1a1a2e] border border-[#2a2a4a] max-w-sm w-full rounded-2xl p-6 shadow-2xl transform transition-all scale-95 opacity-0">
         </div>
     </div>
 
-    <script>window.BASE_URL = '<?= BASE_URL ?>';</script>
+    <script>
+        window.BASE_URL = '<?= BASE_URL ?>';
+    </script>
 
     <script>
         // sin sesión
@@ -171,11 +173,11 @@ $isLoggedIn = isset($_SESSION['id']) ? 'true' : 'false';
             <div class="mb-6">
                 <p class="text-[10px] text-gray-400 uppercase tracking-widest mb-3 text-center font-bold">Añadir a mi biblioteca</p>
                 <div class="flex flex-wrap justify-center gap-2">
-                    <button onclick="agregarLibro(${libro.id}, 'leyendo')" class="flex-1 bg-[#2a9d8f]/20 hover:bg-[#2a9d8f] text-[#2a9d8f] hover:text-white border border-[#2a9d8f]/30 px-2 py-2 rounded-lg text-[10px] font-bold transition-all">
-                        LEYENDO
-                    </button>
                     <button onclick="agregarLibro(${libro.id}, 'pendiente')" class="flex-1 bg-gray-500/20 hover:bg-gray-500 text-gray-400 hover:text-white border border-gray-500/30 px-2 py-2 rounded-lg text-[10px] font-bold transition-all">
                         PENDIENTE
+                    </button>
+                    <button onclick="agregarLibro(${libro.id}, 'leyendo')" class="flex-1 bg-[#2a9d8f]/20 hover:bg-[#2a9d8f] text-[#2a9d8f] hover:text-white border border-[#2a9d8f]/30 px-2 py-2 rounded-lg text-[10px] font-bold transition-all">
+                        LEYENDO
                     </button>
                     <button onclick="agregarLibro(${libro.id}, 'terminado')" class="flex-1 bg-[#f4a261]/20 hover:bg-[#f4a261] text-[#f4a261] hover:text-[#0f0f1a] border border-[#f4a261]/30 px-2 py-2 rounded-lg text-[10px] font-bold transition-all">
                         TERMINADO

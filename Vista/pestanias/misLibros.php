@@ -16,20 +16,20 @@ $isLoggedIn = $userId ? 'true' : 'false';
     <!-- Filtros de estado -->
     <div class="flex flex-wrap gap-3 mb-8 status-filters">
         <button onclick="filtrarColeccion('all', this)"
-                class="status-filter-btn bg-[#f4a261] text-[#0f0f1a] px-3 py-1.5 rounded-lg text-[11px] font-bold uppercase tracking-widest transition-all">
+            class="status-filter-btn bg-[#f4a261] text-[#0f0f1a] px-3 py-1.5 rounded-lg text-[11px] font-bold uppercase tracking-widest transition-all">
             Todos
         </button>
+        <button onclick="filtrarColeccion('pendiente', this)"
+            class="status-filter-btn bg-[#2a2a4a] text-[#a8a5a0] hover:bg-gray-500 hover:text-white px-3 py-1.5 rounded-lg text-[11px] font-bold uppercase tracking-widest transition-all border border-[#3a3a5a]">
+            Pendientes
+        </button>
         <button onclick="filtrarColeccion('leyendo', this)"
-                class="status-filter-btn bg-[#2a2a4a] text-[#a8a5a0] hover:bg-[#2a9d8f] hover:text-white px-3 py-1.5 rounded-lg text-[11px] font-bold uppercase tracking-widest transition-all border border-[#3a3a5a]">
+            class="status-filter-btn bg-[#2a2a4a] text-[#a8a5a0] hover:bg-[#2a9d8f] hover:text-white px-3 py-1.5 rounded-lg text-[11px] font-bold uppercase tracking-widest transition-all border border-[#3a3a5a]">
             Leyendo
         </button>
         <button onclick="filtrarColeccion('terminado', this)"
-                class="status-filter-btn bg-[#2a2a4a] text-[#a8a5a0] hover:bg-[#f4a261] hover:text-[#0f0f1a] px-3 py-1.5 rounded-lg text-[11px] font-bold uppercase tracking-widest transition-all border border-[#3a3a5a]">
+            class="status-filter-btn bg-[#2a2a4a] text-[#a8a5a0] hover:bg-[#f4a261] hover:text-[#0f0f1a] px-3 py-1.5 rounded-lg text-[11px] font-bold uppercase tracking-widest transition-all border border-[#3a3a5a]">
             Terminados
-        </button>
-        <button onclick="filtrarColeccion('pendiente', this)"
-                class="status-filter-btn bg-[#2a2a4a] text-[#a8a5a0] hover:bg-gray-500 hover:text-white px-3 py-1.5 rounded-lg text-[11px] font-bold uppercase tracking-widest transition-all border border-[#3a3a5a]">
-            Pendientes
         </button>
     </div>
 
@@ -43,14 +43,16 @@ $isLoggedIn = $userId ? 'true' : 'false';
     </div>
 
 </main>
-<script>window.BASE_URL = '<?= BASE_URL ?>';</script>
+<script>
+    window.BASE_URL = '<?= BASE_URL ?>';
+</script>
 <script>
     window.DB_LIBROS = <?= json_encode($librosBase) ?>;
     window.USER_COL = <?= json_encode($coleccionUsuario) ?>;
     window.SESION_ACTIVA = <?= $isLoggedIn ?>;
 
     //la función se ejecuta al cargar la página
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         renderColeccion('all');
     });
 
@@ -111,12 +113,12 @@ $isLoggedIn = $userId ? 'true' : 'false';
             msgBox.classList.remove('hidden');
             if (filtro == 'all') {
                 txtMsg.textContent = 'Aún no tienes libros en tu colección.';
+            } else if (filtro == 'pendiente') {
+                txtMsg.textContent = 'No tienes libros pendientes.';
             } else if (filtro == 'leyendo') {
                 txtMsg.textContent = 'No tienes libros en curso.';
             } else if (filtro == 'terminado') {
                 txtMsg.textContent = 'No has terminado ningún libro todavía.';
-            } else if (filtro == 'pendiente') {
-                txtMsg.textContent = 'No tienes libros pendientes.';
             }
             return;
         }
@@ -144,6 +146,10 @@ $isLoggedIn = $userId ? 'true' : 'false';
     function tarjetaHTML(libro, estado) {
 
         const etiquetas = {
+            pendiente: {
+                label: 'Pendiente',
+                color: 'bg-gray-500 text-white'
+            },
             leyendo: {
                 label: 'Leyendo',
                 color: 'bg-[#2a9d8f] text-white'
@@ -152,10 +158,7 @@ $isLoggedIn = $userId ? 'true' : 'false';
                 label: 'Terminado',
                 color: 'bg-[#f4a261] text-[#0f0f1a]'
             },
-            pendiente: {
-                label: 'Pendiente',
-                color: 'bg-gray-500 text-white'
-            },
+
         };
 
         // Elegir la etiqueta correcta
