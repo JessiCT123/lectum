@@ -71,19 +71,7 @@
             <button type="submit" name="volver" class="submit-btn">Volver</button>
         </a>
 
-        <script>
-            function togglePw(inputId, btn) {
-                const input = document.getElementById(inputId);
-                const icon = btn.querySelector('i');
-                if (input.type == 'password') {
-                    input.type = 'text';
-                    icon.classList.replace('fa-eye', 'fa-eye-slash');
-                } else {
-                    input.type = 'password';
-                    icon.classList.replace('fa-eye-slash', 'fa-eye');
-                }
-            }
-        </script>
+        <script src="func.js"></script>
         <footer>
             <p class="text-sm text-[#a8a5a0] text-center md:text-left">
                 <span class="font-display text-[#f4a261]">Lectum</span> © 2025/2026 · Proyecto fin de grado
