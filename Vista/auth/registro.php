@@ -114,7 +114,7 @@
 
     </div>
 
-    <script src="<?= BASE_URL ?>func.js"></script>
+    <script src="<?= BASE_URL ?>/Vista/assets/js/func.js"></script>
 
 </body>
 
