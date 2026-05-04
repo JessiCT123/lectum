@@ -37,7 +37,7 @@
                 <label for="formUsuario">Usuario</label>
                 <div class="input-wrap">
                     <i class="fa-solid fa-user input-icon"></i>
-                    <input type="text" class="form-input" id="formUsuario" placeholder="Ingrese su usuario"
+                    <input type="text" class="form-input" id="usuario" placeholder="Ingrese su usuario"
                         autocomplete="usuario" name="usuario" />
                 </div>
                 <ul style="color:#999; font-size:0.78rem; margin-top:0.4rem; padding-left:1.2rem;">
@@ -68,7 +68,7 @@
                 <div class="strength-wrap">
                     <ul style="color:#999; font-size:0.78rem; margin-top:0.4rem; padding-left:1.2rem;">
                         <li id="length">Debe contener al menos 8 caracteres.</li>
-                        <li id="mayus">Debe contener al menos una mayúscula.</li>
+                        <li id="mayusPassword">Debe contener al menos una mayúscula.</li>
                     </ul>
                 </div>
             </div>
@@ -114,7 +114,7 @@
 
     </div>
 
-    <script src="func.js"></script>
+    <script src="<?= BASE_URL ?>func.js"></script>
 
 </body>
 
