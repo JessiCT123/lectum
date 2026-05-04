@@ -149,7 +149,8 @@ class PerfilController extends BaseController
             //5. Guardamos la nueva foto y actualizamos el usuario
             $nombreArchivo = $this->ficherosService->guardar(
                 $archivo,
-                FOTOS_FOLDER
+                FOTOS_FOLDER,
+                $usuario['usuario'],
             );
             if ($nombreArchivo) {
                 $usuario['foto'] = $nombreArchivo;
