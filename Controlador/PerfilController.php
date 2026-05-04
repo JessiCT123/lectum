@@ -141,7 +141,7 @@ class PerfilController extends BaseController
             //4. Obtenemos el usuario de BD a partir de la sesión y si
             // ya existe foto para ese usuario se borra.
             $usuario = $this->usuarioModelo->getById($this->getSesion('id'));
-            if (!empty($usuario['foto'])) {
+            if (!empty($usuario['foto']) && !$usuario['foto'] !== 'perfil.jpg') {
                 $filepath = DIR_BASE . FOTOS_FOLDER . $usuario['foto'];
                 $this->ficherosService->borrar($filepath);
             }

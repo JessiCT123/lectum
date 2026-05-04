@@ -74,6 +74,7 @@ class AuthController extends BaseController
             'email' => $this->requestPost('email'),
             'password' => $this->requestPost('password'),
             'password1' => $this->requestPost('password1'),
+            'foto'=> 'perfil.jpg',
         ];
 
         if (!$this->validacionesService->validarRegistro($user)) {
