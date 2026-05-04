@@ -298,3 +298,50 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+//Funciones para registros y login
+const usuarioInput = document.getElementById("usuario");
+const mayus = document.getElementById("mayus");
+const numero = document.getElementById("numero");
+const passwordInput = document.getElementById("regPassword");
+const length = document.getElementById("length");
+
+usuarioInput.addEventListener("input", function () {
+    const valor = usuarioInput.value;
+
+    // Mayúscula
+    if (/[A-Z]/.test(valor)) {
+        mayus.style.color = "green";
+    } else {
+        mayus.style.color = "red";
+    }
+
+    // Número o símbolo
+    if (/[0-9!@#$%^&*()\-_:]/.test(valor)) {
+        numero.style.color = "green";
+    } else {
+        numero.style.color = "red";
+    }
+});
+
+passwordInput.addEventListener("input", function () {
+    const valor = passwordInput.value;
+
+    if (valor.length >= 8) {
+        length.style.color = "green";
+    } else {
+        length.style.color = "red";
+    }
+});
+
+function togglePw(inputId, btn) {
+    const input = document.getElementById(inputId);
+    const icon = btn.querySelector('i');
+    if (input.type === 'password') {
+        input.type = 'text';
+        icon.classList.replace('fa-eye', 'fa-eye-slash');
+    } else {
+        input.type = 'password';
+        icon.classList.replace('fa-eye-slash', 'fa-eye');
+    }
+}
