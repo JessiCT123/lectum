@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro</title>
     <link rel="stylesheet" href="<?= BASE_URL ?>/Vista/assets/css/styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 
 </head>
 
@@ -16,13 +16,20 @@
         <h1 class="form-heading">Bienvenido a Lectum</h1>
         <p class="form-subheading">Crea tu cuenta gratis</p>
 
+        <?php
+        if (isset($_SESSION['error_message'])) {
+            echo '<p style="color:red">' . $_SESSION['error_message'] . "</p>";
+            unset($_SESSION['error_message']);
+        }
+        ?>
+
         <form method="post" action="<?= BASE_URL ?>/auth/registrar">
             <div class="input-group">
                 <label for="formNombre">Nombre completo</label>
                 <div class="input-wrap">
                     <i class="fa-solid fa-user input-icon"></i>
                     <input type="text" class="form-input" id="formNombre" placeholder="Ingresa tu nombre completo"
-                           name="nombre" autocomplete="name"/>
+                        name="nombre" autocomplete="name" />
                 </div>
             </div>
 
@@ -30,12 +37,12 @@
                 <label for="formUsuario">Usuario</label>
                 <div class="input-wrap">
                     <i class="fa-solid fa-user input-icon"></i>
-                    <input type="text" class="form-input" id="formUsuario" placeholder="Ingrese su usuario"
-                           autocomplete="usuario" name="usuario"/>
+                    <input type="text" class="form-input" id="usuario" placeholder="Ingrese su usuario"
+                        autocomplete="usuario" name="usuario" />
                 </div>
                 <ul style="color:#999; font-size:0.78rem; margin-top:0.4rem; padding-left:1.2rem;">
-                    <li>Debe contener al menos una mayúscula.</li>
-                    <li>Debe contener al menos un número o símbolo (!@#$%^&*()-_).</li>
+                    <li id="mayus">Debe contener al menos una mayúscula.</li>
+                    <li id="numero">Debe contener al menos un número o símbolo (!@#$%^&*()-_).</li>
                 </ul>
             </div>
 
@@ -44,7 +51,7 @@
                 <div class="input-wrap">
                     <i class="fa-solid fa-envelope input-icon"></i>
                     <input type="email" id="formEmail" class="form-input" placeholder="Ingresa tu email" name="email"
-                           autocomplete="email"/>
+                        autocomplete="email" />
                 </div>
             </div>
 
@@ -53,14 +60,15 @@
                 <div class="input-wrap">
                     <i class="fa-solid fa-lock input-icon"></i>
                     <input type="password" id="regPassword" class="form-input" placeholder="Mínimo 8 caracteres"
-                           name="password"/>
+                        name="password" />
                     <button type="button" class="pw-toggle" onclick="togglePw('regPassword',this)">
                         <i class="fa-solid fa-eye"></i>
                     </button>
                 </div>
                 <div class="strength-wrap">
                     <ul style="color:#999; font-size:0.78rem; margin-top:0.4rem; padding-left:1.2rem;">
-                        <li>Debe contener al menos 8 caracteres.</li>
+                        <li id="length">Debe contener al menos 8 caracteres.</li>
+                        <li id="mayusPassword">Debe contener al menos una mayúscula.</li>
                     </ul>
                 </div>
             </div>
@@ -70,7 +78,7 @@
                 <div class="input-wrap">
                     <i class="fa-solid fa-lock input-icon"></i>
                     <input type="password" class="form-input" id="repeatPassword" placeholder="Repite tu contraseña"
-                           name="password1"/>
+                        name="password1" />
                 </div>
             </div>
 
@@ -82,13 +90,6 @@
                 </label>
             </div>-->
 
-            <?php
-            /*Si no se ha encontrado el usuario ni contraseña se mostrará el mensaje de error. */
-            if (isset($_SESSION['error_message'])) {
-                echo '<p style="color:red">' . $_SESSION['error_message'] . "</p>";
-                unset($_SESSION['error_message']);
-            }
-            ?>
             <?php if (isset($_SESSION['success_message'])): ?>
                 <p style="color:green">✅ Usuario creado</p>
                 <br>
@@ -113,19 +114,7 @@
 
     </div>
 
-    <script>
-        function togglePw(inputId, btn) {
-            const input = document.getElementById(inputId);
-            const icon = btn.querySelector('i');
-            if (input.type == 'password') {
-                input.type = 'text';
-                icon.classList.replace('fa-eye', 'fa-eye-slash');
-            } else {
-                input.type = 'password';
-                icon.classList.replace('fa-eye-slash', 'fa-eye');
-            }
-        }
-    </script>
+    <script src="<?= BASE_URL ?>/Vista/assets/js/func.js"></script>
 
 </body>
 
