@@ -302,6 +302,7 @@ document.addEventListener('DOMContentLoaded', () => {
 //Funciones para registros y login
 const usuarioInput = document.getElementById("usuario");
 const mayus = document.getElementById("mayus");
+const mayusPassword = document.getElementById("mayusPassword");
 const numero = document.getElementById("numero");
 const passwordInput = document.getElementById("regPassword");
 const length = document.getElementById("length");
@@ -332,6 +333,13 @@ passwordInput.addEventListener("input", function () {
     } else {
         length.style.color = "red";
     }
+
+    if (/[A-Z]/.test(valor)) {
+        mayusPassword.style.color = "green";
+    } else {
+        mayusPassword.style.color = "red";
+    }
+
 });
 
 function togglePw(inputId, btn) {
