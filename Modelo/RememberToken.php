@@ -15,7 +15,7 @@ class RememberToken extends BaseModel
         'f_creacion',
     ];
 
-    public function getByToken(string $token, bool $caducidad = true): array
+    public function getByToken(string $token, bool $caducidad = true): array|false
     {
         $stmt = $this->conn
             ->prepare("

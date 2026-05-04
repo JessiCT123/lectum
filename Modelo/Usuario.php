@@ -16,7 +16,7 @@ class Usuario extends BaseModel
         'foto',
     ];
 
-    public function getByUsuarioOrEmail(string $usuario): array
+    public function getByUsuarioOrEmail(string $usuario): array|false
     {
         $stmt = $this->conn
             ->prepare("
