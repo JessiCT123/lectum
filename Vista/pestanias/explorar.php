@@ -104,7 +104,8 @@ $isLoggedIn = isset($_SESSION['id']) ? 'true' : 'false';
                         '<option value="Leyendo">Leyendo</option>' +
                         '<option value="Terminado">Terminado</option>' +
                         '</select>' +
-                        '<p id="msg-' + libro.id + '" class="text-[10px] text-[#2a9d8f] mt-1 hidden">Guardado</p>';
+                        '<p id="msg-card-' + libro.id + '" class="text-[10px] mt-1 hidden"></p>';
+
                 } else {
                     botonColeccion = '<p class="text-[10px] text-[#a8a5a0] mt-2 italic">Inicia sesión para añadir</p>';
                 }
@@ -184,8 +185,7 @@ $isLoggedIn = isset($_SESSION['id']) ? 'true' : 'false';
                     </button>
                 </div>
             </div>
-
-        <div id="msg-${libro.id}" class="hidden text-xs mt-2 text-center text-white">
+            <div id="msg-modal-${libro.id}" class="hidden text-xs mt-2 text-center text-white">
 </div>
 
             <a href="${window.BASE_URL}/inicio/compararPrecios?id=${libro.id}" class="flex items-center justify-center gap-2 w-full bg-[#16213e] hover:bg-[#f4a261] text-[#f4a261] hover:text-[#0f0f1a] py-3 rounded-xl border border-[#f4a261]/50 font-bold text-xs transition-all uppercase tracking-widest">
@@ -235,14 +235,22 @@ $isLoggedIn = isset($_SESSION['id']) ? 'true' : 'false';
         }
 
         function mostrarMensaje(id, texto, color, autoOcultar = false) {
-            const msg = document.getElementById(`msg-${id}`);
-            msg.innerText = texto;
-            msg.style.color = color;
-            msg.classList.remove('hidden');
+            // Busca en el modal y en la tarjeta
+            let targets = [
+                document.getElementById(`msg-modal-${id}`),
+                document.getElementById(`msg-card-${id}`)
+            ];
 
-            if (autoOcultar) {
-                setTimeout(() => msg.classList.add('hidden'), 2000);
-            }
+            targets.forEach(msg => {
+                if (!msg) return;
+                msg.innerText = texto;
+                msg.style.color = color;
+                msg.classList.remove('hidden');
+
+                if (autoOcultar) {
+                    setTimeout(() => msg.classList.add('hidden'), 2000);
+                }
+            });
         }
 
 
