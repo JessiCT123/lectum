@@ -19,7 +19,7 @@
         <!-- foto de perfil -->
         <form action="<?= BASE_URL ?>/perfil/subirFoto" class="perfil-img" method="post" enctype="multipart/form-data">
             <input type="file" name="foto" accept="image/*" id="fotoInput" style="display:none;"  onchange="this.form.submit()" required>
-            <img src="<?= BASE_URL . '/' . FOTOS_FOLDER . '/' . ($_SESSION['foto'] ?: 'perfil.jpg') ?>">
+            <img src="<?= BASE_URL . '/' . FOTOS_FOLDER . '/' . ($_SESSION['foto'] ?: 'perfil.jpg'); ?>">
             <button type="button" class="submit-btn" onclick="document.getElementById('fotoInput').click()">Cambiar foto</button>
         </form>
 

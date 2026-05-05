@@ -1,7 +1,7 @@
 <?php
 
 // Detecta automáticamente el host y puerto del servidor actual , para evitar fallos
-const BASE_URL = 'http://localhost/lectum-Jessi/';// hay que modificarlo por la url base donde se sirve el proyecto.
+const BASE_URL = 'http://localhost/lectum';// hay que modificarlo por la url base donde se sirve el proyecto.
 
 //BASE DE DATOS
 const DB_HOST = 'localhost'; //aquí se añade el host de la bd del servidor que se use. 

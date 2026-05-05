@@ -296,9 +296,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 mostrarPreciosLibro(this.value);
             }
         });
+        
     }
 });
-
 //Funciones para registros y login
 const usuarioInput = document.getElementById("usuario");
 const mayus = document.getElementById("mayus");
