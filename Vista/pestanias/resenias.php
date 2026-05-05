@@ -35,11 +35,6 @@ include_once dirname(__DIR__) . '/header.php';
                                 <label for="sel-libro">Libro</label>
                                 <select id="sel-libro" name="libro_id">
                                     <option value="">Selecciona un libro...</option>
-                                    <?php foreach ($libros as $l): ?>
-                                        <option value="<?= $l['id'] ?>">
-                                            <?= htmlspecialchars($l['titulo']) ?> — <?= htmlspecialchars($l['autor']) ?>
-                                        </option>
-                                    <?php endforeach; ?>
                                 </select>
                             </div>
 
@@ -110,6 +105,7 @@ include_once dirname(__DIR__) . '/header.php';
 
         document.addEventListener('DOMContentLoaded', function() {
             let select = document.getElementById('book-select');
+            let selectLibro = document.getElementById('sel-libro');
 
             for (let i = 0; i < window.LIBROS.length; i++) {
                 let libro = window.LIBROS[i];
@@ -117,12 +113,17 @@ include_once dirname(__DIR__) . '/header.php';
                 opcion.value = libro.id;
                 opcion.textContent = libro.titulo;
                 select.appendChild(opcion);
+                let opcion1 = document.createElement('option');
+                opcion1.value = libro.id;
+                opcion1.textContent = libro.titulo;
+                selectLibro.appendChild(opcion1);
             }
 
             //  cuando tenemos el id del libro ,lo seleccionamos automáticamente
             let idLibro = '<?= $idLibro ?>';
             if (idLibro != '') {
                 select.value = idLibro;
+                selectLibro.value = idLibro;
             }
             mostrarResenia(idLibro);
 
