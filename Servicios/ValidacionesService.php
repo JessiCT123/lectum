@@ -4,7 +4,7 @@ namespace Servicios;
 
 class ValidacionesService
 {
-    private const PREG_PASS = '/[0-9!@#$%^&*)(-_]/';
+    private const PREG_PASS = '/^[\d\!\@\#\$\%\^\&\*\(\)\-\_]+$/';
 
     public function validarRegistro(array $user): bool
     {
@@ -34,7 +34,7 @@ class ValidacionesService
             $validado = false;
         }
         if (!preg_match( self::PREG_PASS, $usuario)) {
-            $_SESSION['error_message'] .= 'El usuario debe contener al menos un número o símbolo (!@#$%^&*).<br>';
+            $_SESSION['error_message'] .= 'El usuario debe contener al menos un número o símbolo (!@#$%^&*), no se acepta ":".<br>';
             $validado = false;
         }
 
