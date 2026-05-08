@@ -4,7 +4,7 @@ namespace Servicios;
 
 class ValidacionesService
 {
-    private const PREG_PASS = '/^[\d\!\@\#\$\%\^\&\*\(\)\-\_]+$/';
+    private const PREG_PASS = '/[0-9!@#$%^&*()\-_]/';
 
     public function validarRegistro(array $user): bool
     {
