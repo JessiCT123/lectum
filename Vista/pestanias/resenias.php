@@ -101,51 +101,61 @@ include_once dirname(__DIR__) . '/header.php';
 
     <script>
         window.LIBROS = <?= json_encode($libros, JSON_THROW_ON_ERROR) ?>;
-         window.RESENIAS = <?= json_encode($resenias, JSON_THROW_ON_ERROR) ?>;
+        window.RESENIAS = <?= json_encode($resenias, JSON_THROW_ON_ERROR) ?>;
 
         document.addEventListener('DOMContentLoaded', function() {
+            //selector de reseñas siempre visible 
             let select = document.getElementById('book-select');
             let selectLibro = document.getElementById('sel-libro');
 
             for (let i = 0; i < window.LIBROS.length; i++) {
                 let libro = window.LIBROS[i];
-                let opcion = document.createElement('option');
-                opcion.value = libro.id;
-                opcion.textContent = libro.titulo;
-                select.appendChild(opcion);
-                let opcion1 = document.createElement('option');
-                opcion1.value = libro.id;
-                opcion1.textContent = libro.titulo;
-                selectLibro.appendChild(opcion1);
+                if (select) {
+                    let opcion = document.createElement('option');
+                    opcion.value = libro.id;
+                    opcion.textContent = libro.titulo;
+                    select.appendChild(opcion);
+                }
+                if (selectLibro) {
+                    let opcion1 = document.createElement('option');
+                    opcion1.value = libro.id;
+                    opcion1.textContent = libro.titulo;
+                    selectLibro.appendChild(opcion1);
+                }
             }
-
             //  cuando tenemos el id del libro ,lo seleccionamos automáticamente
             let idLibro = '<?= $idLibro ?>';
             if (idLibro != '') {
-                select.value = idLibro;
-                selectLibro.value = idLibro;
+                if (select) {
+                    select.value = idLibro;
+                }
+                if (selectLibro) {
+                    selectLibro.value = idLibro;
+                }
             }
-            mostrarResenia(idLibro);
-
-            select.addEventListener('change', function() {
+            mostrarResenia(idLibro || '');
+            if (select) {
+                select.addEventListener('change', function() {
                     mostrarResenia(this.value);
-            });
-        });
-
-        let valoracion = parseInt(document.getElementById("valoracion").value) || 0;
-
-        document.querySelectorAll(".star-btn").forEach(btn => {
-            btn.addEventListener("click", () => {
-                valoracion = parseInt(btn.dataset.val);
-
-                document.querySelectorAll(".star-btn").forEach((b, i) => {
-                    b.classList.toggle("active", i < valoracion);
                 });
-            });
-        });
+            }
+            if (document.getElementById("valoracion")) {
+                let valoracion = parseInt(document.getElementById("valoracion").value) || 0;
 
-        document.getElementById("review-form").addEventListener("submit", () => {
-            document.getElementById("valoracion").value = valoracion;
+                document.querySelectorAll(".star-btn").forEach(btn => {
+                    btn.addEventListener("click", () => {
+                        valoracion = parseInt(btn.dataset.val);
+
+                        document.querySelectorAll(".star-btn").forEach((b, i) => {
+                            b.classList.toggle("active", i < valoracion);
+                        });
+                    });
+                });
+
+                document.getElementById("review-form").addEventListener("submit", () => {
+                    document.getElementById("valoracion").value = valoracion;
+                });
+            }
         });
     </script>
 
