@@ -1,0 +1,75 @@
+<?php
+session_start();
+include 'conexion.php'; // tu conexión a la BD
+require_once __DIR__ . '/../config/config.php';
+
+try {
+
+    if (!empty($_POST['usuario']) && !empty($_POST['password'])) { /*comprobamos que los datos de usuario y password estén llenos*/
+        $usuario = $_POST["usuario"];
+        $password = $_POST["password"];
+
+        /*Realizamos la consulta en la tabla de usuarios para ver si existe el usuario ingresado */
+        $consulta = "SELECT * FROM usuarios WHERE usuario = :usuario OR email = :usuario";
+        $sql = $conn->prepare($consulta);
+        $sql->bindParam(":usuario", $usuario);
+        $sql->execute();
+
+        /*Obtienemos el resultado de la consulta SQL */
+        $row = $sql->fetch(PDO::FETCH_ASSOC);
+
+        // Verificar usuario y contraseña
+        if ($row && password_verify($password, $row['password'])) {
+
+            // Guardar sesión con datos reales
+            $_SESSION['id'] = $row['id'];
+            $_SESSION['usuario'] = $row['usuario'];
+            $_SESSION['nombre'] = $row['nombre'];
+            $_SESSION['email'] = $row['email'];
+
+            // recordar sesión
+            if (isset($_POST['rememberMe'])) {
+
+                $token = bin2hex(random_bytes(32));
+                $hash = hash('sha256', $token);
+                $expiry = date("Y-m-d H:i:s", time() + (86400 * 7)); // 7 días
+
+                // Borrar tokens anteriores
+                $delete = $conn->prepare("DELETE FROM remember_tokens WHERE usuario_id = :id");
+                $delete->bindParam(":id", $row['id']);
+                $delete->execute();
+
+                // Guardar nuevo token
+                $consulta = "INSERT INTO remember_tokens (usuario_id, token_hash, f_caducidad) 
+                             VALUES(:id, :hash, :expiry)";
+                $stmt = $conn->prepare($consulta);
+                $stmt->bindParam(":id", $row['id']);
+                $stmt->bindParam(":hash", $hash);
+                $stmt->bindParam(":expiry", $expiry);
+                $stmt->execute();
+
+                // Crear cookie para guardar la sesión 
+                setcookie("remember_token", $token, [
+                    'expires' => time() + (86400 * 15),
+                    'path' => '/',
+                    'httponly' => true, // No se puede acceder a la cookie desde JavaScript
+                    'samesite' => 'Strict' // Evita que la cookie se envíe en peticiones externas 
+                    // 'secure' => true // activar si usas HTTPS
+                    ]);
+            }
+
+            header("Location: " . BASE_URL . "/index.php");
+            exit();
+        } else {
+            $_SESSION['error_message'] = 'Usuario/email o contraseña incorrectos.';
+            header("Location: " . BASE_URL . "/backend/sesion.php");
+            exit();
+        }
+    } else {
+        $_SESSION['error_message'] = 'Debe ingresar todos los datos.';
+       header("Location: " . BASE_URL . "/backend/sesion.php");
+        exit();
+    }
+} catch (PDOException $e) {
+    echo $e->getMessage();
+}
